@@ -3,170 +3,158 @@ import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
     return (
-        <div className="h-screen w-full flex flex-col md:flex-row-reverse overflow-hidden bg-white">
-
-            {/* RIGHT SIDE (Visual Panel)  */}
-            <div className="hidden md:flex md:w-5/12 relative flex-col justify-between text-white overflow-hidden shrink-0">
-                {/* A slightly different background shape composition */}
-                <div className="absolute inset-0 z-0 bg-linear-to-b from-[#6B82F6] to-[#4F46E5] overflow-hidden">
-                    <div className="absolute top-0 right-0 w-[150%] h-[150%] -translate-y-1/4 translate-x-1/4 opacity-20 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
-                    <div className="absolute -top-10 -left-10 w-96 h-96 bg-white rounded-full opacity-10 filter blur-3xl"></div>
-                    <div className="absolute bottom-10 right-10 w-64 h-64 bg-indigo-300 rounded-full opacity-20 filter blur-3xl"></div>
-
-                    {/* Decorative abstract wave instead of circles */}
-                    <svg className="absolute bottom-0 left-0 w-full h-1/2 opacity-30" viewBox="0 0 1440 320" preserveAspectRatio="none">
-                        <path fill="#ffffff" fillOpacity="0.5" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,197.3C960,171,1056,117,1152,101.3C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                    </svg>
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 p-12 flex flex-col h-full justify-between items-center text-center">
-                    <div className="w-full flex items-center justify-end gap-3 opacity-90">
-                        <span className="text-xl font-bold tracking-wide">StudyGen Platform</span>
-                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center font-bold text-xs">AI</div>
-                    </div>
-
-                    <div className="mt-10 mb-auto flex flex-col justify-center items-center w-full">
-                        <h1 className="text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
-                            Smarter Study
-                        </h1>
-                        <p className="text-indigo-100 text-[15px] leading-relaxed max-w-sm font-medium">
-                            Generate flashcards, summaries, and quizzes instantly.
-                        </p>
-                    </div>
-
-                    {/* New CSS Illustration: AI Brain connecting to documents */}
-                    <div className="flex justify-center mt-4 h-64 w-full items-center pb-12">
-                        <div className="relative w-72 h-72 flex items-center justify-center">
-
-                            {/* Connecting dashed lines SVG */}
-                            <svg className="absolute inset-0 w-full h-full z-0 opacity-40 pointer-events-none" viewBox="0 0 288 288">
-                                <path d="M144 144 L60 80 M144 144 L228 80 M144 144 L144 240 M144 144 L60 210 M144 144 L228 210" stroke="white" strokeWidth="2" strokeDasharray="6 6" />
-                            </svg>
-
-                            {/* Central AI glowing core */}
-                            <div className="absolute z-30 w-24 h-24 bg-white rounded-full shadow-[0_0_40px_rgba(255,255,255,0.4)] flex flex-col items-center justify-center">
-                                <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-500 font-black text-3xl">AI</span>
-                                <div className="absolute inset-2 rounded-full border border-blue-100/50"></div>
-                            </div>
-
-                            {/* Floating Card 1: Document/Summary */}
-                            <div className="absolute z-20 w-20 h-24 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl -top-2 left-6 transform -rotate-12 p-2.5 flex flex-col gap-1.5 border border-white/40">
-                                <div className="w-full h-2 bg-blue-100 rounded-lg"></div>
-                                <div className="w-full h-1 bg-gray-100 rounded-lg"></div>
-                                <div className="w-full h-1 bg-gray-100 rounded-lg"></div>
-                                <div className="w-2/3 h-1 bg-gray-100 rounded-lg"></div>
-                                <div className="mt-auto self-end w-4 h-4 bg-blue-500 rounded flex items-center justify-center">
-                                    <div className="w-2 h-0.5 bg-white rounded"></div>
-                                </div>
-                            </div>
-
-                            {/* Floating Card 2: Quiz Checkmarks */}
-                            <div className="absolute z-20 w-24 h-20 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl top-4 right-4 transform rotate-12 p-3 flex flex-col gap-2 border border-white/40">
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#34A853] flex-shrink-0"></div><div className="w-full h-1.5 bg-gray-200 rounded"></div></div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full border-2 border-gray-200 flex-shrink-0"></div><div className="w-2/3 h-1.5 bg-gray-200 rounded"></div></div>
-                                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full border-2 border-gray-200 flex-shrink-0"></div><div className="w-4/5 h-1.5 bg-gray-200 rounded"></div></div>
-                            </div>
-
-                            {/* Floating Card 3: Flashcard Back */}
-                            <div className="absolute z-20 w-20 h-14 bg-amber-100 border border-amber-200 rounded-xl shadow-lg bottom-10 left-4 transform -rotate-6 flex flex-col items-center justify-center gap-1">
-                                <span className="text-[11px] font-bold text-amber-700">Q: Concept?</span>
-                            </div>
-
-                            {/* Floating Card 4: Flashcard Front */}
-                            <div className="absolute z-20 w-20 h-14 bg-teal-100 border border-teal-200 rounded-xl shadow-lg bottom-16 right-4 transform rotate-[15deg] flex flex-col items-center justify-center">
-                                <span className="text-[11px] font-bold text-teal-700">A: Answer!</span>
-                            </div>
-
-                            {/* Floating PDF Icon */}
-                            <div className="absolute z-40 w-12 h-14 bg-rose-500 text-white rounded-lg shadow-xl bottom-0 -ml-6 border border-rose-400 flex flex-col items-center justify-center transform rotate-3">
-                                <span className="font-bold text-sm tracking-widest">PDF</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="min-h-screen w-full flex flex-col relative bg-white overflow-hidden text-gray-800">
+            {/* Background Decor */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-50 rounded-full opacity-50 blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                <div className="absolute top-1/4 -left-64 w-[600px] h-[600px] bg-indigo-50 rounded-full opacity-50 blur-3xl"></div>
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#6B82F6] rounded-full opacity-10 filter blur-[100px]"></div>
+                <svg className="absolute top-0 left-0 w-full h-[60vh] opacity-20" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path fill="#6B82F6" fillOpacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,197.3C960,171,1056,117,1152,101.3C1248,85,1344,107,1392,117.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+                </svg>
             </div>
 
-            {/* LEFT SIDE (Content Panel) */}
-            <div className="w-full md:w-7/12 bg-white p-8 md:p-12 lg:p-16 xl:p-24 flex flex-col justify-center relative">
-
-                <div className="md:hidden flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full text-white flex items-center justify-center font-bold text-xs shadow-md">AI</div>
-                    <span className="text-xl font-bold text-gray-800 tracking-wide">StudyGen</span>
+            {/* Header */}
+            <header className="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-[#6B82F6] rounded-full text-white flex items-center justify-center font-bold text-[14px] shadow-lg shadow-[#6B82F6]/30">AI</div>
+                    <span className="text-2xl font-extrabold tracking-tight text-gray-900">StudyGen</span>
                 </div>
+                <div className="flex items-center gap-6">
+                    <Link to="/login" className="hidden sm:block text-[15px] font-semibold text-gray-600 hover:text-[#6B82F6] transition-colors">Log In</Link>
+                    <Link to="/signup" className="text-[15px] font-medium text-white bg-[#6B82F6] hover:bg-[#5B72E2] px-6 py-2.5 rounded-full shadow-lg shadow-[#6B82F6]/30 transition-all hover:-translate-y-0.5 active:translate-y-0 active:scale-95">Start for Free</Link>
+                </div>
+            </header>
 
-                <div className="max-w-xl mx-auto md:mx-0 w-full h-full flex flex-col justify-center">
-
-
-                    <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4 tracking-tight leading-tight">
-                        Your Personal AI <br className="hidden md:block" /><span className="text-transparent bg-clip-text bg-linear-to-r from-[#6B82F6] to-indigo-500">Learning Companion</span>
-                    </h2>
-
-                    <p className="text-gray-500 mb-8 text-[14px] lg:text-[15px] leading-relaxed">
-                        Simplify your study routine. Upload your notes, slides, or documents, and let our AI generate structured learning materials designed to help you succeed.
+            {/* Main Hero */}
+            <main className="flex-1 w-full flex flex-col items-center relative z-10 pt-10 pb-20">
+                
+                {/* Hero Text */}
+                <div className="max-w-4xl mx-auto px-6 text-center">
+                    <h1 className="text-5xl md:text-6xl lg:text-[72px] font-black text-gray-900 leading-[1.1] tracking-tight mb-8">
+                        Your Personal AI <br />
+                        <span className="text-transparent bg-clip-text bg-linear-to-r from-[#6B82F6] to-indigo-500">Learning Companion</span>
+                    </h1>
+                    <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Simplify your study routine. Upload your notes, slides, or documents, and let our AI instantly generate structured flashcards, summaries, and quizzes seamlessly.
                     </p>
-
-                    {/* Features Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                        {/* Feature 1 */}
-                        <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-100 hover:border-blue-200 transition-colors">
-                            <div className="w-10 h-10 rounded-lg bg-blue-100 text-[#6B82F6] flex items-center justify-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-gray-800 mb-1 text-base">Smart Uploads</h3>
-                            <p className="text-[13px] text-gray-500 leading-snug">Process PDFs and text files in seconds to build your knowledge base.</p>
-                        </div>
-
-                        {/* Feature 2 */}
-                        <div className="p-4 rounded-xl bg-indigo-50/50 border border-indigo-100 hover:border-indigo-200 transition-colors">
-                            <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-500 flex items-center justify-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-gray-800 mb-1 text-base">Auto-Summaries</h3>
-                            <p className="text-[13px] text-gray-500 leading-snug">Extract key concepts and summaries without reading the whole text.</p>
-                        </div>
-
-                        {/* Feature 3 */}
-                        <div className="p-4 rounded-xl bg-purple-50/50 border border-purple-100 hover:border-purple-200 transition-colors">
-                            <div className="w-10 h-10 rounded-lg bg-purple-100 text-purple-500 flex items-center justify-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-gray-800 mb-1 text-base">Dynamic Quizzes</h3>
-                            <p className="text-[13px] text-gray-500 leading-snug">Test your knowledge with AI-generated multiple-choice questions.</p>
-                        </div>
-
-                        {/* Feature 4 */}
-                        <div className="p-4 rounded-xl bg-pink-50/50 border border-pink-100 hover:border-pink-200 transition-colors">
-                            <div className="w-10 h-10 rounded-lg bg-pink-100 text-pink-500 flex items-center justify-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
-                                </svg>
-                            </div>
-                            <h3 className="font-semibold text-gray-800 mb-1 text-base">Flashcards</h3>
-                            <p className="text-[13px] text-gray-500 leading-snug">Perfect your memory retention with active recall flashcard sets.</p>
-                        </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Link to="/signup" className="flex-1 bg-[#6B82F6] hover:bg-[#5B72E2] text-white font-medium py-3.5 px-6 rounded-xl shadow-lg shadow-[#6B82F6]/30 transition duration-200 active:scale-[0.98] text-center flex items-center justify-center gap-2 text-[15px]">
-                            Get Started Free
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                    
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link to="/signup" className="w-full sm:w-auto bg-[#6B82F6] hover:bg-[#5B72E2] text-white font-semibold py-4 px-8 rounded-full shadow-xl shadow-[#6B82F6]/30 transition-all hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-2 text-[16px]">
+                            Get Started
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                             </svg>
                         </Link>
-                        <Link to="/login" className="flex-1 bg-white border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 font-medium py-3.5 px-6 rounded-xl transition duration-200 active:scale-[0.98] text-center flex items-center justify-center text-[15px]">
-                            I already have an account
+                        <Link to="/login" className="w-full sm:w-auto bg-white border-2 border-gray-100 hover:border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-4 px-8 rounded-full transition-all text-[16px] flex items-center justify-center">
+                            I have an account
                         </Link>
                     </div>
                 </div>
-            </div>
+
+                {/* Center stage CSS Illustration */}
+                <div className="relative w-full max-w-3xl mx-auto mt-24 mb-32 flex justify-center items-center h-64 scale-90 sm:scale-100">
+                    <div className="relative w-80 h-80 flex items-center justify-center">
+
+                        {/* Connecting dashed lines SVG */}
+                        <svg className="absolute inset-0 w-full h-full z-0 opacity-20 pointer-events-none" viewBox="0 0 320 320">
+                            <path d="M160 160 L40 60 M160 160 L280 60 M160 160 L160 300 M160 160 L40 260 M160 160 L280 260" stroke="#2563EB" strokeWidth="2" strokeDasharray="6 6" />
+                        </svg>
+
+                        {/* Background glow behind AI core */}
+                        <div className="absolute w-40 h-40 bg-[#6B82F6] rounded-full opacity-20 filter blur-2xl"></div>
+
+                        {/* Central AI glowing core */}
+                        <div className="absolute z-30 w-32 h-32 bg-white rounded-full shadow-[0_10px_40px_rgba(107,130,246,0.3)] flex flex-col items-center justify-center border-4 border-[#6B82F6]/10">
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-500 font-black text-4xl">AI</span>
+                            <div className="absolute inset-2 rounded-full border border-[#6B82F6]/20"></div>
+                            <div className="absolute -inset-2 border border-[#6B82F6]/10 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                        </div>
+
+                        {/* Floating Card 1: Document/Summary */}
+                        <div className="absolute z-20 w-24 h-28 bg-white backdrop-blur-sm rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] -top-6 -left-4 transform -rotate-[15deg] p-3 flex flex-col gap-2 border border-gray-100 hover:scale-105 transition-transform cursor-default">
+                            <div className="w-full h-2.5 bg-blue-100 rounded-lg"></div>
+                            <div className="w-full h-1.5 bg-gray-100 rounded-lg mt-1"></div>
+                            <div className="w-full h-1.5 bg-gray-100 rounded-lg"></div>
+                            <div className="w-2/3 h-1.5 bg-gray-100 rounded-lg"></div>
+                            <div className="mt-auto self-end w-5 h-5 bg-[#6B82F6] rounded-md flex items-center justify-center">
+                                <div className="w-2.5 h-0.5 bg-white rounded"></div>
+                            </div>
+                        </div>
+
+                        {/* Floating Card 2: Quiz Checkmarks */}
+                        <div className="absolute z-20 w-28 h-24 bg-white backdrop-blur-sm rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] top-2 -right-10 transform rotate-12 p-3.5 flex flex-col gap-2.5 border border-gray-100 hover:scale-105 transition-transform cursor-default">
+                            <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-full bg-[#10B981] shadow-sm shadow-emerald-200 flex-shrink-0"></div><div className="w-full h-2 bg-gray-100 rounded"></div></div>
+                            <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-full border-2 border-gray-200 flex-shrink-0"></div><div className="w-2/3 h-2 bg-gray-100 rounded"></div></div>
+                            <div className="flex items-center gap-2"><div className="w-3.5 h-3.5 rounded-full border-2 border-gray-200 flex-shrink-0"></div><div className="w-5/6 h-2 bg-gray-100 rounded"></div></div>
+                        </div>
+
+                        {/* Floating Card 3: Flashcard Back */}
+                        <div className="absolute z-20 w-24 h-16 bg-amber-50 border border-amber-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] bottom-12 -left-12 transform -rotate-12 flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform cursor-default">
+                            <span className="text-[12px] font-black text-amber-600 tracking-wide">WHAT IS AI?</span>
+                        </div>
+
+                        {/* Floating Card 4: Flashcard Front */}
+                        <div className="absolute z-20 w-24 h-16 bg-teal-50 border border-teal-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] bottom-2 -right-4 transform rotate-[20deg] flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-default">
+                            <span className="text-[12px] font-black text-teal-600 tracking-wide text-center leading-tight">ARTIFICIAL<br/>INTELLIGENCE</span>
+                        </div>
+
+                        {/* Floating PDF Icon */}
+                        <div className="absolute z-40 w-14 h-16 bg-rose-500 text-white rounded-xl shadow-xl shadow-rose-200 -bottom-8 left-10 border border-rose-400 flex flex-col items-center justify-center transform rotate-6 hover:scale-110 transition-transform cursor-default">
+                            <span className="font-bold text-[15px] tracking-widest">PDF</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Features Highlights (Clean Centered Row) */}
+                <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8">
+                    
+                    {/* Feature 1 */}
+                    <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-gray-100/50 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all group">
+                        <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#6B82F6] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#6B82F6] group-hover:text-white transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                        </div>
+                        <h3 className="font-bold text-gray-900 mb-2 text-[17px]">Smart Uploads</h3>
+                        <p className="text-[14.5px] text-gray-500 leading-relaxed">Instantly process PDFs and text files to securely compile your knowledge base.</p>
+                    </div>
+
+                    {/* Feature 2 */}
+                    <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-gray-100/50 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all group">
+                        <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-bold text-gray-900 mb-2 text-[17px]">Auto-Summaries</h3>
+                        <p className="text-[14.5px] text-gray-500 leading-relaxed">Extract key concepts automatically so you never have to read through fluff again.</p>
+                    </div>
+
+                    {/* Feature 3 */}
+                    <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-gray-100/50 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all group">
+                        <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 className="font-bold text-gray-900 mb-2 text-[17px]">Dynamic Quizzes</h3>
+                        <p className="text-[14.5px] text-gray-500 leading-relaxed">Measure retention seamlessly with AI-generated multiple-choice questions.</p>
+                    </div>
+
+                    {/* Feature 4 */}
+                    <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-gray-100/50 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all group">
+                        <div className="w-14 h-14 rounded-2xl bg-pink-50 text-pink-500 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+                            </svg>
+                        </div>
+                        <h3 className="font-bold text-gray-900 mb-2 text-[17px]">Flashcards</h3>
+                        <p className="text-[14.5px] text-gray-500 leading-relaxed">Utilize active recall methodologies optimally with interactive flashcard decks.</p>
+                    </div>
+
+                </div>
+            </main>
         </div>
     );
 };

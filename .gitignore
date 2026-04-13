@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+backend/node_modules/
+my-ai/node_modules/
+
+# env files (IMPORTANT)
+.env
+backend/.env
+my-ai/.env
+
+# build files
+dist/
+build/
+
+# logs
+npm-debug.log*
+
+# misc
+.DS_Store

@@ -10,10 +10,10 @@ const Signup = () => {
             <div className="hidden md:flex md:w-5/12 relative flex-col justify-between text-white overflow-hidden shrink-0">
                 <div className="absolute inset-0 z-0 bg-[#5b75f0] overflow-hidden">
                     <svg className="absolute top-0 right-0 w-[150%] h-[150%] -translate-y-1/4 translate-x-1/4 opacity-30 pointer-events-none" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="400" cy="400" r="399.5" stroke="white" strokeWidth="1" strokeOpacity="0.3"/>
-                        <circle cx="400" cy="400" r="300" stroke="white" strokeWidth="1" strokeOpacity="0.2"/>
-                        <circle cx="400" cy="400" r="200" stroke="white" strokeWidth="1" strokeOpacity="0.1"/>
-                        <path d="M100 400C100 234.315 234.315 100 400 100" stroke="white" strokeWidth="2" strokeOpacity="0.5"/>
+                        <circle cx="400" cy="400" r="399.5" stroke="white" strokeWidth="1" strokeOpacity="0.3" />
+                        <circle cx="400" cy="400" r="300" stroke="white" strokeWidth="1" strokeOpacity="0.2" />
+                        <circle cx="400" cy="400" r="200" stroke="white" strokeWidth="1" strokeOpacity="0.1" />
+                        <path d="M100 400C100 234.315 234.315 100 400 100" stroke="white" strokeWidth="2" strokeOpacity="0.5" />
                     </svg>
                     <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full opacity-10 filter blur-2xl"></div>
                     <div className="absolute bottom-20 right-20 w-48 h-48 bg-white rounded-full opacity-20 filter blur-3xl"></div>
@@ -27,12 +27,12 @@ const Signup = () => {
                             <div className="w-10 h-10 bg-white/20 rounded-full"></div>
                             <div className="w-7 h-7 bg-white rounded-full absolute -right-2 top-2 shadow-sm"></div>
                         </div>
-                        <span className="text-2xl font-bold tracking-wide">StudyGen</span>
+                        <span className="text-2xl font-bold tracking-wide">SG</span>
                     </div>
 
                     <div className="mt-10 mb-auto flex-1 flex flex-col justify-center">
                         <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-5">
-                            Start your <br/>learning <br/>journey today
+                            Start your <br />learning <br />journey today
                         </h1>
                         <p className="text-indigo-100 text-[15px] leading-relaxed max-w-xs font-light">
                             Join us and experience the perfect place to store your documents and generate AI study materials.
@@ -42,43 +42,43 @@ const Signup = () => {
                     {/* CSS Illustration mimicking the folders/documents */}
                     <div className="flex justify-center mt-8 h-48 w-full items-end pb-8">
                         <div className="w-56 h-48 relative">
-                           {/* Folder Back */}
-                           <div className="absolute bottom-0 w-48 h-36 bg-[#2B54E8] rounded-xl shadow-lg left-4 origin-bottom-left"></div>
-                           
-                           {/* Documents */}
-                           <div className="absolute bottom-10 left-12 w-28 h-36 bg-white rounded-lg shadow-md border border-gray-50 transform -rotate-[15deg] p-3 flex flex-col gap-2 z-10">
+                            {/* Folder Back */}
+                            <div className="absolute bottom-0 w-48 h-36 bg-[#2B54E8] rounded-xl shadow-lg left-4 origin-bottom-left"></div>
+
+                            {/* Documents */}
+                            <div className="absolute bottom-10 left-12 w-28 h-36 bg-white rounded-lg shadow-md border border-gray-50 transform -rotate-[15deg] p-3 flex flex-col gap-2 z-10">
                                 <div className="w-8 h-8 rounded-md bg-rose-100 mb-1 flex items-center justify-center">
                                     <div className="w-4 h-4 bg-rose-500 rounded-full flex items-center justify-center">
-                                       <div className="w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-1"></div>
+                                        <div className="w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-1"></div>
                                     </div>
                                 </div>
                                 <div className="w-full h-1.5 bg-gray-200 rounded-full"></div>
                                 <div className="w-3/4 h-1.5 bg-gray-200 rounded-full"></div>
-                           </div>
-                           
-                           <div className="absolute bottom-16 left-24 w-28 h-36 bg-white rounded-lg shadow-md border border-gray-50 transform rotate-[8deg] p-3 flex flex-col gap-2 z-10">
+                            </div>
+
+                            <div className="absolute bottom-16 left-24 w-28 h-36 bg-white rounded-lg shadow-md border border-gray-50 transform rotate-[8deg] p-3 flex flex-col gap-2 z-10">
                                 <div className="w-full h-14 bg-amber-100 rounded mb-1 border-t-8 border-amber-300"></div>
                                 <div className="w-full h-1.5 bg-gray-200 rounded-full"></div>
                                 <div className="w-full h-1.5 bg-gray-200 rounded-full"></div>
                                 <div className="w-1/2 h-1.5 bg-gray-200 rounded-full"></div>
-                           </div>
+                            </div>
 
-                           <div className="absolute bottom-12 left-20 w-24 h-32 bg-white rounded-lg shadow-md border border-gray-50 transform -rotate-[4deg] p-3 flex flex-col gap-2 z-20">
+                            <div className="absolute bottom-12 left-20 w-24 h-32 bg-white rounded-lg shadow-md border border-gray-50 transform -rotate-[4deg] p-3 flex flex-col gap-2 z-20">
                                 <div className="w-full h-10 bg-teal-100 rounded mb-1"></div>
                                 <div className="w-full h-1.5 bg-gray-200 rounded-full"></div>
                                 <div className="w-2/3 h-1.5 bg-gray-200 rounded-full"></div>
-                           </div>
+                            </div>
 
-                           {/* Folder Front */}
-                           <div className="absolute bottom-0 w-52 h-28 bg-[#4970FA] rounded-xl shadow-lg left-2 origin-bottom-left z-30 flex items-center border-[0.5px] border-white/20"></div>
+                            {/* Folder Front */}
+                            <div className="absolute bottom-0 w-52 h-28 bg-[#4970FA] rounded-xl shadow-lg left-2 origin-bottom-left z-30 flex items-center border-[0.5px] border-white/20"></div>
 
-                           {/* Magnifying glass */}
-                           <div className="absolute right-0 -bottom-4 z-40 transform rotate-[30deg]">
+                            {/* Magnifying glass */}
+                            <div className="absolute right-0 -bottom-4 z-40 transform rotate-[30deg]">
                                 <div className="w-16 h-16 rounded-full border-[6px] border-indigo-200 bg-white/20 shadow-lg backdrop-blur-sm relative"></div>
                                 <div className="w-5 h-10 bg-amber-400 absolute top-14 left-1/2 -ml-2.5 rounded-b-md shadow-md">
                                     <div className="w-full h-2 bg-yellow-300 rounded-t-sm"></div>
                                 </div>
-                           </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,8 +92,8 @@ const Signup = () => {
                     <form className="space-y-4">
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Full Name</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 placeholder="Enter your name"
                                 className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[15px]"
                             />
@@ -101,8 +101,8 @@ const Signup = () => {
 
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Email</label>
-                            <input 
-                                type="email" 
+                            <input
+                                type="email"
                                 placeholder="name@example.com"
                                 className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[15px]"
                             />
@@ -117,12 +117,12 @@ const Signup = () => {
                                         display: none;
                                     }
                                 `}</style>
-                                <input 
-                                    type={showPassword ? "text" : "password"} 
+                                <input
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="••••••••••••"
                                     className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all pr-12 placeholder:text-gray-400 text-[15px]"
                                 />
-                                <button 
+                                <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"

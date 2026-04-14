@@ -18,7 +18,7 @@ const LandingPage = () => {
             <header className="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-[#6B82F6] rounded-full text-white flex items-center justify-center font-bold text-[14px] shadow-lg shadow-[#6B82F6]/30">AI</div>
-                    <span className="text-2xl font-extrabold tracking-tight text-gray-900">StudyGen</span>
+                    <span className="text-2xl font-extrabold tracking-tight text-gray-900">SG</span>
                 </div>
                 <div className="flex items-center gap-6">
                     <Link to="/login" className="hidden sm:block text-[15px] font-semibold text-gray-600 hover:text-[#6B82F6] transition-colors">Log In</Link>
@@ -28,7 +28,7 @@ const LandingPage = () => {
 
             {/* Main Hero */}
             <main className="flex-1 w-full flex flex-col items-center relative z-10 pt-10 pb-20">
-                
+
                 {/* Hero Text */}
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <h1 className="text-5xl md:text-6xl lg:text-[72px] font-black text-gray-900 leading-[1.1] tracking-tight mb-8">
@@ -38,7 +38,7 @@ const LandingPage = () => {
                     <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
                         Simplify your study routine. Upload your notes, slides, or documents, and let our AI instantly generate structured flashcards, summaries, and quizzes seamlessly.
                     </p>
-                    
+
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link to="/signup" className="w-full sm:w-auto bg-[#6B82F6] hover:bg-[#5B72E2] text-white font-semibold py-4 px-8 rounded-full shadow-xl shadow-[#6B82F6]/30 transition-all hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-2 text-[16px]">
                             Get Started
@@ -96,7 +96,7 @@ const LandingPage = () => {
 
                         {/* Floating Card 4: Flashcard Front */}
                         <div className="absolute z-20 w-24 h-16 bg-teal-50 border border-teal-100 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] bottom-2 -right-4 transform rotate-[20deg] flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-default">
-                            <span className="text-[12px] font-black text-teal-600 tracking-wide text-center leading-tight">ARTIFICIAL<br/>INTELLIGENCE</span>
+                            <span className="text-[12px] font-black text-teal-600 tracking-wide text-center leading-tight">ARTIFICIAL<br />INTELLIGENCE</span>
                         </div>
 
                         {/* Floating PDF Icon */}
@@ -108,7 +108,7 @@ const LandingPage = () => {
 
                 {/* Features Highlights (Clean Centered Row) */}
                 <div className="w-full max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8">
-                    
+
                     {/* Feature 1 */}
                     <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-gray-100/50 hover:bg-white hover:shadow-xl hover:shadow-gray-200/50 transition-all group">
                         <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#6B82F6] flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#6B82F6] group-hover:text-white transition-all duration-300">

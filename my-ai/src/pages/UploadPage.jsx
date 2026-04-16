@@ -19,6 +19,7 @@ const UploadPage = () => {
         try {
             const res = await axios.post('http://localhost:5000/upload', formData)
             setdata(res.data.summary)
+            return res.data.summary;
         }
         catch (error) {
             console.error('error', error);
@@ -30,7 +31,9 @@ const UploadPage = () => {
     const handleGenerateNotes = async () => {
         try {
             const result = await callbackend();
-            navigate('/Summarypage');
+            navigate('/summary', {
+                state: { summary: result }
+            });
         } catch (error) {
             console.error(error);
         }
@@ -94,22 +97,6 @@ const UploadPage = () => {
                             ) : 'Generate Notes'}
                         </button>
                     </div>
-
-                    {data && (
-                        <div className='w-full mt-12 bg-gray-50/50 border border-gray-100 rounded-[24px] p-8 md:p-10 text-left mb-10'>
-                            <div className='flex items-center gap-3 mb-6'>
-                                <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center border border-teal-100">
-                                    <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                                <h3 className='text-xl font-bold text-gray-800 tracking-tight'>Analysis Complete</h3>
-                            </div>
-                            <div className="prose prose-sm max-w-none text-gray-600 leading-relaxed text-[15px]">
-                                <p>{data}</p>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
         </div >

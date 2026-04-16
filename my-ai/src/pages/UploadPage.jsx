@@ -27,6 +27,15 @@ const UploadPage = () => {
         }
     }
 
+    const handleGenerateNotes = async () => {
+        try {
+            const result = await callbackend();
+            navigate('/Summarypage');
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className="h-full min-h-screen w-full bg-white flex flex-col pt-12 md:pt-20">
             <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col">
@@ -54,7 +63,7 @@ const UploadPage = () => {
                         <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">Click to select a file</h3>
                         <p className="text-[15px] text-gray-500 z-10">or drag and drop it here</p>
                         <p className="text-[12px] text-gray-400 mt-2 uppercase tracking-wider font-semibold z-10">PDF formats only</p>
-                        
+
                         {file && (
                             <div className="mt-8 flex items-center gap-3 bg-white border border-gray-100 shadow-sm rounded-xl px-5 py-3 transition-opacity z-10">
                                 <div className="w-10 h-10 bg-[#6B82F6]/10 rounded-lg flex items-center justify-center shrink-0">
@@ -72,7 +81,7 @@ const UploadPage = () => {
                         <button
                             disabled={!file || isLoading}
                             className={`w-full max-w-sm mx-auto bg-[#6B82F6] hover:bg-[#5B72E2] active:scale-[0.98] cursor-pointer text-white font-medium py-3.5 px-8 rounded-xl transition-all duration-200 shadow-lg shadow-[#6B82F6]/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex justify-center items-center gap-2 text-[15px]`}
-                            onClick={() => callbackend()}
+                            onClick={handleGenerateNotes}
                         >
                             {isLoading ? (
                                 <>
@@ -82,7 +91,7 @@ const UploadPage = () => {
                                     </svg>
                                     Analyzing Content...
                                 </>
-                            ) : 'Generate AI Summary'}
+                            ) : 'Generate Notes'}
                         </button>
                     </div>
 
@@ -103,7 +112,7 @@ const UploadPage = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

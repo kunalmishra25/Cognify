@@ -40,11 +40,11 @@ const UploadPage = () => {
     }
 
     return (
-        <div className="h-full min-h-screen w-full bg-white flex flex-col pt-12 md:pt-20">
+        <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-12 md:pt-20">
             <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col">
                 <div className="mb-12 text-center">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Upload Document</h1>
-                    <p className="text-[15px] text-gray-500 mt-3 max-w-lg mx-auto">Upload your study material in PDF format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
+                    <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">Upload Document</h1>
+                    <p className="text-[16px] text-gray-500 mt-4 max-w-lg mx-auto font-medium">Upload your study material in PDF format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center">
@@ -55,11 +55,11 @@ const UploadPage = () => {
                     />
                     <label
                         htmlFor="fileUpload"
-                        className="group w-full flex flex-col items-center justify-center cursor-pointer border-2 border-dashed border-gray-200 hover:border-[#6B82F6] hover:bg-[#6B82F6]/5 transition-all duration-300 rounded-[32px] py-24 px-10 relative overflow-hidden"
+                        className="group w-full flex flex-col items-center justify-center cursor-pointer border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-white/40 hover:bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] transition-all duration-500 rounded-[2.5rem] py-24 px-10 relative overflow-hidden"
                     >
-                        <div className="absolute inset-0 bg-linear-to-b from-transparent to-gray-50/50 pointer-events-none"></div>
-                        <div className="w-20 h-20 bg-gray-50 border border-gray-100 rounded-full group-hover:scale-110 group-hover:bg-white group-hover:shadow-md transition-all duration-300 flex items-center justify-center mb-6 shadow-sm z-10">
-                            <svg className="w-8 h-8 text-gray-400 group-hover:text-[#6B82F6] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-50/30 pointer-events-none"></div>
+                        <div className="w-24 h-24 bg-white border border-indigo-50 rounded-full group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(99,102,241,0.2)] transition-all duration-500 flex items-center justify-center mb-8 shadow-sm z-10">
+                            <svg className="w-10 h-10 text-indigo-300 group-hover:text-indigo-600 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                         </div>
@@ -83,7 +83,7 @@ const UploadPage = () => {
                     <div className="w-full mt-10">
                         <button
                             disabled={!file || isLoading}
-                            className={`w-full max-w-sm mx-auto bg-[#6B82F6] hover:bg-[#5B72E2] active:scale-[0.98] cursor-pointer text-white font-medium py-3.5 px-8 rounded-xl transition-all duration-200 shadow-lg shadow-[#6B82F6]/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex justify-center items-center gap-2 text-[15px]`}
+                            className={`w-full max-w-sm mx-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.98] cursor-pointer text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-[0_8px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_8px_25px_rgba(99,102,241,0.45)] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex justify-center items-center gap-2 text-[16px]`}
                             onClick={handleGenerateNotes}
                         >
                             {isLoading ? (

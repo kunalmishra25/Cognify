@@ -85,9 +85,9 @@ const Signup = () => {
             </div>
 
             {/* RIGHT SIDE - Form area */}
-            <div className="w-full md:w-7/12 bg-white p-8 md:p-12 lg:p-16 xl:p-24 flex flex-col justify-center relative overflow-y-auto h-full">
+            <div className="w-full md:w-7/12 bg-white p-6 md:p-10 lg:p-12 flex flex-col justify-center relative overflow-y-auto h-full">
                 <div className="max-w-md mx-auto w-full">
-                    <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-8 tracking-tight">Create Account</h2>
+                    <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 tracking-tight">Create Account</h2>
 
                     <form className="space-y-4">
                         <div className="flex flex-col gap-1">
@@ -148,7 +148,7 @@ const Signup = () => {
                         </div>
                     </form>
 
-                    <div className="mt-8">
+                    <div className="mt-6">
                         <div className="relative flex py-4 items-center">
                             <div className="flex-grow border-t border-gray-100"></div>
                             <span className="flex-shrink-0 mx-4 text-gray-400 text-[13px]">or</span>
@@ -156,11 +156,6 @@ const Signup = () => {
                         </div>
 
                         <div className="flex gap-4 justify-center mt-2">
-                            <button className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-100 shadow-sm hover:shadow-md transition-all hover:bg-gray-50 active:scale-95">
-                                <svg className="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                                </svg>
-                            </button>
                             <button className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-100 shadow-sm hover:shadow-md transition-all hover:bg-gray-50 active:scale-95">
                                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -173,7 +168,7 @@ const Signup = () => {
                         </div>
                     </div>
 
-                    <p className="text-center mt-8 text-[14px] text-gray-500 font-medium">
+                    <p className="text-center mt-6 text-[14px] text-gray-500 font-medium">
                         Already have an account? <Link to="/login" className="font-semibold text-[#6B82F6] hover:text-indigo-700 transition-colors">Login</Link>
                     </p>
                 </div>

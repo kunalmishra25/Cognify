@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
+import authLogo from '../assets/logo_bgremove.png';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,11 +25,12 @@ const Login = () => {
 
                 <div className="relative z-10 p-12 flex flex-col h-full justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="relative flex items-center justify-center">
-                            <div className="w-10 h-10 bg-white/20 rounded-full"></div>
-                            <div className="w-7 h-7 bg-white rounded-full absolute -right-2 top-2 shadow-sm"></div>
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/12 ring-1 ring-white/20 backdrop-blur-sm">
+                                <Logo src={authLogo} className="h-9 w-9" />
+                            </div>
+                            <span className="text-2xl font-bold tracking-wide text-white">Cognify</span>
                         </div>
-                        <span className="text-2xl font-bold tracking-wide">SG</span>
                     </div>
 
                     <div className="mt-10 mb-auto flex-1 flex flex-col justify-center">
@@ -87,6 +90,9 @@ const Login = () => {
             {/* RIGHT SIDE - Form area */}
             <div className="w-full md:w-7/12 bg-white p-6 md:p-10 lg:p-12 flex flex-col justify-center relative overflow-y-auto h-full">
                 <div className="max-w-md mx-auto w-full">
+                    <Link to="/" className="inline-flex md:hidden mb-6">
+                        <Logo src={authLogo} className="h-12 w-12" />
+                    </Link>
                     <div className="mb-6">
                         <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-2 tracking-tight">Welcome back</h2>
                         <p className="text-gray-500 text-[15px]">Your notes are waiting for you.</p>

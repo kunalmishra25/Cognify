@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Logo from './Logo';
 
 const Navbar = () => {
     const location = useLocation();
@@ -17,13 +18,8 @@ const Navbar = () => {
         <nav className="fixed left-0 top-0 h-screen w-64 z-50 bg-white border-r border-gray-100 hidden md:flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
             {/* Header Section */}
             <div className="flex items-center h-24 px-8 shrink-0">
-                <Link to="/" className="flex items-center gap-2.5 transition-transform hover:scale-105 duration-200">
-                    <div className="relative flex items-center justify-center w-9 h-9 bg-linear-to-tr from-[#5b75f0] to-[#6B82F6] rounded-xl shadow-lg shadow-[#6B82F6]/30">
-                        <span className="font-bold text-white text-[15px] tracking-wide">SG</span>
-                    </div>
-                    <span className="font-bold text-[19px] text-gray-800 tracking-tight">
-                        Cognify
-                    </span>
+                <Link to="/" className="flex items-center transition-transform hover:scale-[1.02] duration-200">
+                    <Logo className="h-14 w-auto max-w-[170px]" />
                 </Link>
             </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../components/Logo';
 
 const LandingPage = () => {
     return (
@@ -17,8 +18,7 @@ const LandingPage = () => {
             {/* Header */}
             <header className="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#6B82F6] rounded-full text-white flex items-center justify-center font-bold text-[14px] shadow-lg shadow-[#6B82F6]/30">AI</div>
-                    <span className="text-2xl font-extrabold tracking-tight text-gray-900">SG</span>
+                    <Logo className="h-14 sm:h-16 w-auto max-w-[190px]" />
                 </div>
                 <div className="flex items-center gap-6">
                     <Link to="/login" className="hidden sm:block text-[15px] font-semibold text-gray-600 hover:text-[#6B82F6] transition-colors">Log In</Link>

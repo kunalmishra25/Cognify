@@ -103,8 +103,8 @@ const LandingPage = () => {
                             <span className="text-4xl md:text-5xl font-black text-[#6B82F6] tracking-tighter">AI</span>
                             
                             {/* Orbit Rings */}
-                            <div className="absolute inset-[-20px] rounded-full border-2 border-dashed border-blue-100/60 animate-[spin_20s_linear_infinite]"></div>
-                            <div className="absolute inset-[-45px] rounded-full border border-dashed border-blue-50/40 animate-[spin_30s_linear_infinite_reverse]"></div>
+                            <div className="absolute inset-[-20px] rounded-full border-2 border-dashed border-blue-100/60"></div>
+                            <div className="absolute inset-[-45px] rounded-full border border-dashed border-blue-50/40"></div>
                         </div>
 
                         {/* Connection Lines (SVGs) */}

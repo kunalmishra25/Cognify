@@ -15,7 +15,7 @@ const App = () => {
     const hideNavbar = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/';
 
     return (
-        <div className="flex min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#f6f8ff] via-white to-white">
+        <div className="flex min-h-screen overflow-x-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#f6f8ff] via-white to-white">
             {!hideNavbar && <Navbar />}
             <main className={`flex-1 flex flex-col w-full min-h-screen transition-all duration-300 ${!hideNavbar ? 'md:ml-64' : ''}`}>
                 <Routes>

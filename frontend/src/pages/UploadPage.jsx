@@ -42,9 +42,9 @@ const UploadPage = () => {
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-12 md:pt-20">
             <div className="max-w-4xl mx-auto w-full px-6 flex-1 flex flex-col">
-                <div className="mb-12 text-center">
+                <div className="mb-8 md:mb-12 text-center">
                     <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">Upload Document</h1>
-                    <p className="text-[16px] text-gray-500 mt-4 max-w-lg mx-auto font-medium">Upload your study material in PDF format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
+                    <p className="text-[14px] sm:text-[16px] text-gray-500 mt-3 md:mt-4 max-w-lg mx-auto font-medium px-4">Upload your study material in PDF format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center">
@@ -55,17 +55,17 @@ const UploadPage = () => {
                     />
                     <label
                         htmlFor="fileUpload"
-                        className="group w-full flex flex-col items-center justify-center cursor-pointer border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-white/40 hover:bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] transition-all duration-500 rounded-[2.5rem] py-24 px-10 relative overflow-hidden"
+                        className="group w-full flex flex-col items-center justify-center cursor-pointer border-2 border-dashed border-indigo-200 hover:border-indigo-400 bg-white/40 hover:bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] transition-all duration-500 rounded-[2rem] sm:rounded-[2.5rem] py-16 sm:py-24 px-6 sm:px-10 relative overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-50/30 pointer-events-none"></div>
-                        <div className="w-24 h-24 bg-white border border-indigo-50 rounded-full group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(99,102,241,0.2)] transition-all duration-500 flex items-center justify-center mb-8 shadow-sm z-10">
-                            <svg className="w-10 h-10 text-indigo-300 group-hover:text-indigo-600 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white border border-indigo-50 rounded-full group-hover:scale-110 group-hover:shadow-[0_0_40px_rgba(99,102,241,0.2)] transition-all duration-500 flex items-center justify-center mb-6 sm:mb-8 shadow-sm z-10">
+                            <svg className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-300 group-hover:text-indigo-600 transition-colors duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                             </svg>
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">Click to select a file</h3>
-                        <p className="text-[15px] text-gray-500 z-10">or drag and drop it here</p>
-                        <p className="text-[12px] text-gray-400 mt-2 uppercase tracking-wider font-semibold z-10">PDF formats only</p>
+                        <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 z-10">Click to select a file</h3>
+                        <p className="text-[14px] sm:text-[15px] text-gray-500 z-10">or drag and drop it here</p>
+                        <p className="text-[11px] sm:text-[12px] text-gray-400 mt-2 uppercase tracking-wider font-semibold z-10">PDF formats only</p>
 
                         {file && (
                             <div className="mt-8 flex items-center gap-3 bg-white border border-gray-100 shadow-sm rounded-xl px-5 py-3 transition-opacity z-10">

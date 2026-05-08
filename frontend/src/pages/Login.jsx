@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import authLogo from '../assets/logo_bgremove.png';
+
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        navigate('/dashboard')
+    }
+
     return (
-        <div className="h-screen w-full flex flex-col md:flex-row overflow-hidden bg-white">
+        <div className="min-h-screen w-full flex flex-col md:flex-row overflow-x-hidden bg-white">
             {/* LEFT SIDE - Blue area */}
             <div className="hidden md:flex md:w-5/12 relative flex-col justify-between text-white overflow-hidden shrink-0">
                 <div className="absolute inset-0 z-0 bg-[#5b75f0] overflow-hidden">
@@ -88,7 +97,7 @@ const Login = () => {
             </div>
 
             {/* RIGHT SIDE - Form area */}
-            <div className="w-full md:w-7/12 bg-white p-6 md:p-10 lg:p-12 flex flex-col justify-center relative overflow-y-auto h-full">
+            <div className="w-full md:w-7/12 bg-white px-6 py-10 md:p-10 lg:p-12 flex flex-col justify-center relative min-h-screen md:h-full">
                 <div className="max-w-md mx-auto w-full">
                     <Link to="/" className="inline-flex md:hidden mb-6">
                         <Logo src={authLogo} className="h-12 w-12" />
@@ -98,7 +107,7 @@ const Login = () => {
                         <p className="text-gray-500 text-[15px]">Your notes are waiting for you.</p>
                     </div>
 
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleLogin}>
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Email</label>
                             <input

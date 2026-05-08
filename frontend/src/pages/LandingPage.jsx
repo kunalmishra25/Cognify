@@ -25,9 +25,9 @@ const LandingPage = () => {
             </div>
 
             {/* Header */}
-            <header className="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
+            <header className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex justify-between items-center relative z-20">
                 <div className="flex items-center gap-3">
-                    <Logo className="h-14 sm:h-16 w-auto max-w-[190px]" />
+                    <Logo className="h-10 sm:h-14 md:h-16 w-auto max-w-[150px] sm:max-w-[190px]" />
                 </div>
 
                 <div className="flex items-center gap-6">
@@ -52,14 +52,14 @@ const LandingPage = () => {
 
                 {/* Hero Text */}
                 <div className="max-w-4xl mx-auto px-6 text-center">
-                    <h1 className="text-5xl md:text-6xl lg:text-[72px] font-black text-gray-900 leading-[1.1] tracking-tight mb-8">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-black text-gray-900 leading-[1.1] tracking-tight mb-8">
                         Your Personal AI <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6B82F6] to-indigo-500">
                             Learning Companion
                         </span>
                     </h1>
 
-                    <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-[16px] sm:text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed px-2">
                         Simplify your study routine. Upload your notes, slides, or documents, and let our AI instantly
                         generate structured flashcards, summaries, and quizzes seamlessly.
                     </p>
@@ -96,71 +96,58 @@ const LandingPage = () => {
                 </div>
 
                 {/* AI Visualization Graphic Section */}
-                <div className="w-full max-w-5xl mx-auto mt-16 mb-20 relative px-6 overflow-visible">
-                    <div className="relative flex items-center justify-center min-h-[400px]">
+                <div className="w-full max-w-5xl mx-auto mt-12 mb-16 md:mt-16 md:mb-20 relative px-4 sm:px-6 overflow-visible scale-90 sm:scale-100">
+                    <div className="relative flex items-center justify-center min-h-[350px] md:min-h-[400px]">
                         {/* Central AI Circle */}
-                        <div className="relative z-10 w-32 h-32 md:w-40 md:h-40 rounded-full bg-white border-[6px] border-blue-50 shadow-[0_0_50px_rgba(107,130,246,0.15)] flex items-center justify-center">
-                            <span className="text-4xl md:text-5xl font-black text-[#6B82F6] tracking-tighter">AI</span>
+                        <div className="relative z-10 w-28 h-28 md:w-40 md:h-40 rounded-full bg-white border-[6px] border-blue-50 shadow-[0_0_50px_rgba(107,130,246,0.15)] flex items-center justify-center">
+                            <span className="text-3xl md:text-5xl font-black text-[#6B82F6] tracking-tighter">AI</span>
                             
                             {/* Orbit Rings */}
-                            <div className="absolute inset-[-20px] rounded-full border-2 border-dashed border-blue-100/60"></div>
-                            <div className="absolute inset-[-45px] rounded-full border border-dashed border-blue-50/40"></div>
+                            <div className="absolute inset-[-15px] md:inset-[-20px] rounded-full border-2 border-dashed border-blue-100/60"></div>
+                            <div className="absolute inset-[-35px] md:inset-[-45px] rounded-full border border-dashed border-blue-50/40"></div>
                         </div>
 
                         {/* Connection Lines (SVGs) */}
                         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" overflow="visible">
                             {/* Lines from center to nodes */}
-                            <line x1="50%" y1="50%" x2="25%" y2="25%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60" />
-                            <line x1="50%" y1="50%" x2="75%" y2="25%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60" />
-                            <line x1="50%" y1="50%" x2="20%" y2="50%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60" />
-                            <line x1="50%" y1="50%" x2="80%" y2="55%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60" />
-                            <line x1="50%" y1="50%" x2="40%" y2="75%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60" />
+                            <line x1="50%" y1="50%" x2="25%" y2="25%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60 hidden sm:block" />
+                            <line x1="50%" y1="50%" x2="75%" y2="25%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60 hidden sm:block" />
+                            <line x1="50%" y1="50%" x2="20%" y2="50%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60 hidden sm:block" />
+                            <line x1="50%" y1="50%" x2="80%" y2="55%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60 hidden sm:block" />
+                            <line x1="50%" y1="50%" x2="40%" y2="75%" stroke="#E2E8F0" strokeWidth="2" strokeDasharray="6,6" className="opacity-60 hidden sm:block" />
                         </svg>
 
                         {/* Floating Nodes */}
                         {/* Top Left: Document */}
-                        <div className="absolute top-[15%] left-[20%] md:left-[25%] p-4 bg-white rounded-2xl shadow-xl shadow-gray-100/50 border border-gray-50 -rotate-12 hover:rotate-0 transition-transform duration-500 group">
-                            <div className="w-16 h-20 bg-blue-50 rounded-lg flex flex-col p-2 gap-1.5 overflow-hidden">
+                        <div className="absolute top-[10%] left-[10%] sm:top-[15%] sm:left-[20%] md:left-[25%] p-3 sm:p-4 bg-white rounded-2xl shadow-xl shadow-gray-100/50 border border-gray-50 -rotate-12 hover:rotate-0 transition-transform duration-500 group scale-90 sm:scale-100">
+                            <div className="w-12 h-16 sm:w-16 sm:h-20 bg-blue-50 rounded-lg flex flex-col p-2 gap-1.5 overflow-hidden">
                                 <div className="w-full h-1.5 bg-blue-200/50 rounded-full"></div>
                                 <div className="w-4/5 h-1.5 bg-blue-200/50 rounded-full"></div>
                                 <div className="w-3/4 h-1.5 bg-blue-200/50 rounded-full"></div>
-                                <div className="mt-auto ml-auto w-4 h-4 bg-blue-400 rounded-md flex items-center justify-center">
-                                    <div className="w-2 h-0.5 bg-white rounded-full"></div>
-                                </div>
                             </div>
                         </div>
 
                         {/* Top Right: List */}
-                        <div className="absolute top-[15%] right-[20%] md:right-[25%] p-4 bg-white rounded-2xl shadow-xl shadow-gray-100/50 border border-gray-50 rotate-12 hover:rotate-0 transition-transform duration-500">
-                            <div className="w-16 h-20 bg-green-50/30 rounded-lg flex flex-col p-2 gap-2.5">
-                                <div className="flex items-center gap-1.5">
-                                    <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                                    <div className="flex-1 h-1 bg-gray-200 rounded-full"></div>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                    <div className="w-2 h-2 rounded-full border border-gray-300"></div>
-                                    <div className="flex-1 h-1 bg-gray-200 rounded-full"></div>
-                                </div>
-                                <div className="flex items-center gap-1.5">
-                                    <div className="w-2 h-2 rounded-full border border-gray-300"></div>
-                                    <div className="flex-1 h-1 bg-gray-200 rounded-full"></div>
-                                </div>
+                        <div className="absolute top-[10%] right-[10%] sm:top-[15%] sm:right-[20%] md:right-[25%] p-3 sm:p-4 bg-white rounded-2xl shadow-xl shadow-gray-100/50 border border-gray-50 rotate-12 hover:rotate-0 transition-transform duration-500 scale-90 sm:scale-100">
+                            <div className="w-12 h-16 sm:w-16 sm:h-20 bg-green-50/30 rounded-lg flex flex-col p-2 gap-2.5">
+                                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-green-500"></div><div className="flex-1 h-1 bg-gray-200 rounded-full"></div></div>
+                                <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full border border-gray-300"></div><div className="flex-1 h-1 bg-gray-200 rounded-full"></div></div>
                             </div>
                         </div>
 
                         {/* Mid Left: WHAT IS AI? */}
-                        <div className="absolute top-[45%] left-[5%] md:left-[10%] px-4 py-2 bg-amber-50 rounded-xl border border-amber-100 shadow-md -rotate-6 hover:rotate-0 transition-all">
-                            <span className="text-[12px] font-black text-amber-700 tracking-tight">WHAT IS AI?</span>
+                        <div className="absolute top-[45%] left-[0%] sm:left-[5%] md:left-[10%] px-3 py-1.5 sm:px-4 sm:py-2 bg-amber-50 rounded-xl border border-amber-100 shadow-md -rotate-6 hover:rotate-0 transition-all scale-90 sm:scale-100">
+                            <span className="text-[10px] sm:text-[12px] font-black text-amber-700 tracking-tight">WHAT IS AI?</span>
                         </div>
 
                         {/* Mid Right: ARTIFICIAL INTELLIGENCE */}
-                        <div className="absolute top-[50%] right-[5%] md:right-[10%] px-4 py-2 bg-emerald-50 rounded-xl border border-emerald-100 shadow-md rotate-6 hover:rotate-0 transition-all">
-                            <span className="text-[12px] font-black text-emerald-700 tracking-tight uppercase">Artificial Intelligence</span>
+                        <div className="absolute top-[50%] right-[0%] sm:right-[5%] md:right-[10%] px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-50 rounded-xl border border-emerald-100 shadow-md rotate-6 hover:rotate-0 transition-all scale-90 sm:scale-100">
+                            <span className="text-[10px] sm:text-[12px] font-black text-emerald-700 tracking-tight uppercase">Artificial Intelligence</span>
                         </div>
 
                         {/* Bottom: PDF */}
-                        <div className="absolute bottom-[10%] left-[40%] px-5 py-3 bg-rose-500 text-white rounded-2xl shadow-lg shadow-rose-200 rotate-12 hover:rotate-0 transition-all flex items-center justify-center">
-                            <span className="text-[14px] font-black tracking-widest">PDF</span>
+                        <div className="absolute bottom-[10%] left-[35%] sm:left-[40%] px-4 py-2 sm:px-5 sm:py-3 bg-rose-500 text-white rounded-2xl shadow-lg shadow-rose-200 rotate-12 hover:rotate-0 transition-all flex items-center justify-center scale-90 sm:scale-100">
+                            <span className="text-[12px] sm:text-[14px] font-black tracking-widest">PDF</span>
                         </div>
                     </div>
                 </div>

@@ -17,7 +17,6 @@ app.post('/upload', uploadfile.single("pdf"), async (req, res) => {
     try {
         const data = await pdfParse(req.file.buffer) //extracting data
         const text = data.text;
-        // send to gemini
         const summary = await getSummary(text);
         res.status(201).json({
             summary: summary,

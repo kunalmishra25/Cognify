@@ -1,7 +1,8 @@
 require('dotenv').config();
 const app = require('./src/app');
+const connectDB = require('./src/db/db');
 
-console.log("GROQ_API:", process.env.GROQ_API);
+connectDB();
 
 app.listen(5000, () => {
     console.log('Server Started at port 5000');

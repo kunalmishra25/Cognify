@@ -17,7 +17,7 @@ const App = () => {
     return (
         <div className="flex min-h-screen overflow-x-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#f6f8ff] via-white to-white">
             {!hideNavbar && <Navbar />}
-            <main className={`flex-1 flex flex-col w-full min-h-screen transition-all duration-300 ${!hideNavbar ? 'md:ml-64' : ''}`}>
+            <main className={`flex-1 flex flex-col w-full min-h-screen transition-all duration-300 ${!hideNavbar ? 'md:ml-64 pt-16 pb-[72px] md:pt-0 md:pb-0' : ''}`}>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/dashboard" element={<Dashboard />} />

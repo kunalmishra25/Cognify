@@ -2,6 +2,8 @@ const express = require('express')
 const multer = require('multer')
 const cors = require('cors')
 const pdfParse = require('pdf-parse');
+const authRoutes = require('./routes/auth.routes')
+const cookieParser = require('cookie-parser')
 const { getSummary } = require('./services/Groq');
 
 const app = express()
@@ -9,6 +11,11 @@ const app = express()
 //MIDDLEWARE
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
+
+
+app.use('/api/auth', authRoutes);
+
 
 const uploadfile = multer({ storage: multer.memoryStorage() })
 

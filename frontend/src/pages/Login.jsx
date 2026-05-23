@@ -1,19 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import authLogo from '../assets/logo_bgremove.png';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setemail] = useState("")
+    const [password, setpassword] = useState("")
 
+    const { user, loading, setUser } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [user, loading, navigate]);
 
-        navigate('/dashboard')
+    if (loading) {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#6B82F6]"></div>
+            </div>
+        );
     }
+
+    if (user) {
+        return null;
+    }
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const userdata = {
+            email,
+            password
+        }
+        try {
+            const response = await axios.post("http://localhost:5000/api/auth/login", userdata);
+            setUser(response.data.user);
+            setemail("")
+            setpassword("")
+
+            navigate('/dashboard')
+
+        } catch (error) {
+            console.log(error.response?.data || error.message)
+        }
+    }
+
+
+
 
     return (
         <div className="min-h-screen w-full flex flex-col md:flex-row overflow-x-hidden bg-white">
@@ -111,8 +150,8 @@ const Login = () => {
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Email</label>
                             <input
-                                type="email"
-                                placeholder="name@example.com"
+                                type="email" required
+                                placeholder="name@example.com" value={email} onChange={(e) => setemail(e.target.value)}
                                 className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[15px]"
                             />
                         </div>
@@ -127,8 +166,8 @@ const Login = () => {
                                     }
                                 `}</style>
                                 <input
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder="••••••••••••"
+                                    type={showPassword ? "text" : "password"} required
+                                    placeholder="••••••••••••" value={password} onChange={(e) => setpassword(e.target.value)}
                                     className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all pr-12 placeholder:text-gray-400 text-[15px]"
                                 />
                                 <button

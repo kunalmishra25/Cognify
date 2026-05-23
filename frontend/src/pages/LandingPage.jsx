@@ -1,8 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
+import { useAuth } from '../context/AuthContext';
 
 const LandingPage = () => {
+    const { user, loading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [user, loading, navigate]);
+
+    if (loading) {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#6B82F6]"></div>
+            </div>
+        );
+    }
+
+    if (user) {
+        return null;
+    }
+
     return (
         <div className="min-h-screen w-full flex flex-col relative bg-white text-gray-800">
             {/* Background Decor */}

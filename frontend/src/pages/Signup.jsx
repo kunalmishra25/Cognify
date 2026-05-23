@@ -1,10 +1,62 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import authLogo from '../assets/logo_bgremove.png';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
+    //signup
+    const [fullname, setfullname] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+
+    const navigate = useNavigate();
+    const { user, loading, setUser } = useAuth();
+
+    useEffect(() => {
+        if (!loading && user) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [user, loading, navigate]);
+
+    if (loading) {
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#6B82F6]"></div>
+            </div>
+        );
+    }
+
+    if (user) {
+        return null;
+    }
+
+
+    const handlesignup = async (e) => {
+        e.preventDefault();
+
+        const userdata = {
+            fullname,
+            email,
+            password,
+        }
+        try {
+            const response = await axios.post("http://localhost:5000/api/auth/register", userdata);
+            setUser(response.data.user);
+            setfullname("");
+            setemail("");
+            setpassword("");
+            navigate('/dashboard');
+
+        } catch (error) {
+            console.log(error.response?.data || error.message)
+        }
+
+    }
+
+
 
     return (
         <div className="min-h-screen w-full flex flex-col md:flex-row overflow-x-hidden bg-white">
@@ -95,12 +147,12 @@ const Signup = () => {
                     </Link>
                     <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 tracking-tight">Create Account</h2>
 
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handlesignup}>
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Full Name</label>
                             <input
                                 type="text"
-                                placeholder="Enter your name"
+                                placeholder="Enter your name" value={fullname} onChange={(e) => setfullname(e.target.value)}
                                 className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[15px]"
                             />
                         </div>
@@ -108,8 +160,8 @@ const Signup = () => {
                         <div className="flex flex-col gap-1">
                             <label className="text-[13px] font-medium text-gray-500">Email</label>
                             <input
-                                type="email"
-                                placeholder="name@example.com"
+                                type="email" required
+                                placeholder="name@example.com" value={email} onChange={(e) => setemail(e.target.value)}
                                 className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all placeholder:text-gray-400 text-[15px]"
                             />
                         </div>
@@ -125,7 +177,7 @@ const Signup = () => {
                                 `}</style>
                                 <input
                                     type={showPassword ? "text" : "password"}
-                                    placeholder="••••••••••••"
+                                    placeholder="••••••••••••" value={password} onChange={(e) => setpassword(e.target.value)}
                                     className="w-full px-4 py-3.5 rounded-xl border border-gray-100 focus:border-[#6B82F6] focus:ring-2 focus:ring-[#6B82F6]/20 bg-gray-50/50 focus:bg-white outline-none transition-all pr-12 placeholder:text-gray-400 text-[15px]"
                                 />
                                 <button
@@ -148,7 +200,7 @@ const Signup = () => {
                         </div>
 
                         <div className="pt-6">
-                            <button type="submit" className="w-full bg-[#6B82F6] hover:bg-[#5B72E2] text-white font-medium py-3.5 px-4 rounded-xl shadow-lg shadow-[#6B82F6]/30 transition duration-200 active:scale-[0.98] text-[15px]">
+                            <button type="submit" className="w-full bg-[#6B82F6] hover:bg-[#5B72E2] cursor-pointer text-white font-medium py-3.5 px-4 rounded-xl shadow-lg shadow-[#6B82F6]/30 transition duration-200 active:scale-[0.98] text-[15px]">
                                 Sign Up
                             </button>
                         </div>

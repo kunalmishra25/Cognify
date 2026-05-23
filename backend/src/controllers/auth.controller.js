@@ -15,6 +15,12 @@ async function register(req, res) {
             message: "User Already Exist"
         })
     }
+
+    if (!fullname || !email || !password) {
+        return res.status(400).json({
+            message: "All fields are required"
+        });
+    }
     const hash = await bcrypt.hash(password, 10);
 
     const user = await userModel.create({
@@ -35,6 +41,7 @@ async function register(req, res) {
         user: {
             id: user._id,
             email: user.email,
+            fullname: user.fullname,
         }
     })
 }
@@ -50,6 +57,12 @@ async function login(req, res) {
         return res.status(401).json({
             message: "Invalid Credentials"
         })
+    }
+
+    if (!email || !password) {
+        return res.status(400).json({
+            message: "All fields are required"
+        });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -71,6 +84,7 @@ async function login(req, res) {
         user: {
             id: user._id,
             email: user.email,
+            fullname: user.fullname,
         }
     })
 
@@ -83,4 +97,14 @@ async function logout(req, res) {
     })
 }
 
-module.exports = { register, login, logout }
+async function getMe(req, res) {
+    res.status(200).json({
+        user: {
+            id: req.user._id,
+            email: req.user.email,
+            fullname: req.user.fullname
+        }
+    })
+}
+
+module.exports = { register, login, logout, getMe }

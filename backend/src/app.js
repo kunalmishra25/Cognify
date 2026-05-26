@@ -10,7 +10,7 @@ const app = express()
 
 //MIDDLEWARE
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: "https://cognify-study.vercel.app",
     credentials: true
 }))
 app.use(express.json())

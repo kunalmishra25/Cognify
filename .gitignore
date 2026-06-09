@@ -7,6 +7,7 @@ my-ai/node_modules/
 .env
 backend/.env
 my-ai/.env
+overview.md
 
 # build files
 dist/

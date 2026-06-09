@@ -9,6 +9,9 @@ import Quiz from './pages/Quiz'
 import FlashcardsPage from './pages/FlashcardsPage'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoutes'
+
+
 
 const App = () => {
     const location = useLocation();
@@ -20,13 +23,17 @@ const App = () => {
             <main className={`flex-1 flex flex-col w-full min-h-screen transition-all duration-300 ${!hideNavbar ? 'md:ml-64 pt-16 pb-[72px] md:pt-0 md:pb-0' : ''}`}>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/upload" element={<UploadPage />} />
-                    <Route path="/summary" element={<SummaryPage />} />
-                    <Route path="/quiz" element={<Quiz />} />
-                    <Route path="/flashcards" element={<FlashcardsPage />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/upload" element={<UploadPage />} />
+                        <Route path="/summary" element={<SummaryPage />} />
+                        <Route path="/quiz" element={<Quiz />} />
+                        <Route path="/flashcards" element={<FlashcardsPage />} />
+
+                    </Route>
                 </Routes>
             </main>
         </div>

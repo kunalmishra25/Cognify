@@ -17,7 +17,7 @@ const UploadPage = () => {
         formData.append('pdf', file)
 
         try {
-            const res = await axios.post('https://cognify-v5za.onrender.com/upload', formData)
+            const res = await axios.post('https://cognify-v5za.onrender.com/api/summary', formData)
             setdata(res.data.summary)
             return res.data.summary;
         }

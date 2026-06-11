@@ -28,7 +28,9 @@ const UploadPage = () => {
             return res.data.summary;
         }
         catch (error) {
-            console.error('error', error);
+            console.log("STATUS:", error.response?.status);
+            console.log("DATA:", error.response?.data);
+            console.error(error);
         } finally {
             setIsLoading(false);
         }

@@ -7,9 +7,6 @@ const { getSummary } = require('../services/Groq');
  */
 async function generateSummary(req, res) {
     try {
-        console.log("Controller Hit");
-        console.log("User:", req.user);
-        console.log("File:", req.file?.originalname);
         // Parse PDF buffer
         const data = await pdfParse(req.file.buffer);
         const text = data.text;
@@ -20,7 +17,6 @@ async function generateSummary(req, res) {
             fileName: req.file.originalname,
             summary: summary
         })
-        console.log("Summary Saved");
         // Respond with summary
         res.status(201).json({ summary });
     } catch (error) {

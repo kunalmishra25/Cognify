@@ -24,9 +24,4 @@ app.use(cookieParser())
 app.use('/api/auth', authRoutes);
 app.use('/api/summary', summaryRoutes);
 
-
-
-
-
-
 module.exports = app

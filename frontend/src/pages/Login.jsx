@@ -39,7 +39,13 @@ const Login = () => {
             password
         }
         try {
-            const response = await axios.post("https://cognify-v5za.onrender.com/api/auth/login", userdata);
+            const response = await axios.post(
+                "https://cognify-v5za.onrender.com/api/auth/login",
+                userdata,
+                {
+                    withCredentials: true
+                }
+            );
             setUser(response.data.user);
             setemail("")
             setpassword("")

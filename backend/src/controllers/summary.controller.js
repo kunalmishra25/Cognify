@@ -1,7 +1,6 @@
 const summaryModel = require('../models/summary.model')
 const pdfParse = require('pdf-parse');
 const { getSummary } = require('../services/Groq');
-
 /**
  * Controller to handle PDF upload, extract text, generate summary, and respond.
  */
@@ -25,4 +24,32 @@ async function generateSummary(req, res) {
     }
 }
 
-module.exports = { generateSummary };
+
+async function getSummaries(req, res) {
+    try {
+        const summaries = await summaryModel.find({
+            userId: req.user._id
+        });
+
+        if (!summaries.length) {
+            return res.status(404).json({
+                success: false,
+                message: "No summaries found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: summaries
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+
+        });
+    }
+}
+
+module.exports = { generateSummary, getSummaries };

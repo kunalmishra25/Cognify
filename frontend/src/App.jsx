@@ -10,6 +10,7 @@ import FlashcardsPage from './pages/FlashcardsPage'
 import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoutes'
+import MyNotes from './pages/MyNotes'
 
 
 
@@ -32,6 +33,8 @@ const App = () => {
                         <Route path="/summary" element={<SummaryPage />} />
                         <Route path="/quiz" element={<Quiz />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
+                        <Route path="/mynotes" element={<MyNotes />} />
+
 
                     </Route>
                 </Routes>

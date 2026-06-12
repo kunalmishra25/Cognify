@@ -20,6 +20,7 @@ async function authMiddleware(req, res, next) {
         console.error("Auth middleware error:", error.message);
         return res.status(401).json({ message: "Token is not valid" });
     }
+    console.log("Cookies:", req.cookies);
 }
 
 module.exports = authMiddleware;

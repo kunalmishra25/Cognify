@@ -18,7 +18,7 @@ const UploadPage = () => {
 
         try {
             const res = await axios.post(
-                'https://cognify-v5za.onrender.com/api/summary/upload',
+                'http://localhost:5000/api/summary/upload',
                 formData,
                 {
                     withCredentials: true
@@ -30,7 +30,7 @@ const UploadPage = () => {
         catch (error) {
             console.log("STATUS:", error.response?.status);
             console.log("DATA:", error.response?.data);
-            console.error(error);
+            console.log("HEADERS:", error.response?.headers);
         } finally {
             setIsLoading(false);
         }

@@ -43,7 +43,7 @@ const Signup = () => {
             password,
         }
         try {
-            const response = await axios.post("https://cognify-v5za.onrender.com/api/auth/register", userdata);
+            const response = await axios.post("http://localhost:5000/api/auth/register", userdata);
             setUser(response.data.user);
             setfullname("");
             setemail("");

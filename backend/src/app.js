@@ -23,5 +23,6 @@ app.use(cookieParser())
 
 app.use('/api/auth', authRoutes);
 app.use('/api/summary', summaryRoutes);
+// app.use('/api/summaries', summaryRoutes); one is enough , the imp thing is what inside your summaryRoutes
 
 module.exports = app

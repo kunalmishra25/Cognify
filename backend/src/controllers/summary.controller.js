@@ -52,4 +52,36 @@ async function getSummaries(req, res) {
     }
 }
 
-module.exports = { generateSummary, getSummaries };
+async function getSummaryById(req, res) {
+    try {
+        const { id } = req.params;
+
+        const summary = await summaryModel.findById(id);
+        if (!summary) {
+            res.status(404).json({
+                success: false,
+                message: "Summary Not found"
+            })
+        }
+
+        if (summary.userId.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "Access denied"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: summary
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+module.exports = { generateSummary, getSummaries, getSummaryById };

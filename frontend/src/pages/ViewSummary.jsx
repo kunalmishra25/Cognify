@@ -25,12 +25,25 @@ const ViewSummary = () => {
         getsummary();
     }, [id])
 
+
+    const deleteSummary = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/api/summary/${id}`, {
+                withCredentials: true,
+            })
+            navigate('/mynotes')
+        } catch (error) {
+            console.error("Error deleting data:", error);
+        }
+    }
+
+
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20 pb-20">
             <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col">
-                
+
                 {/* Navigation Breadcrumb / Back Link */}
-                <button 
+                <button
                     onClick={() => navigate('/mynotes')}
                     className="inline-flex items-center gap-2 text-[14px] font-semibold text-gray-500 hover:text-[#6B82F6] transition-colors mb-6 cursor-pointer self-start"
                 >
@@ -62,7 +75,7 @@ const ViewSummary = () => {
                     </div>
                 ) : (
                     <div className="flex-1 flex flex-col w-full">
-                        
+
                         {/* Document Header Panel */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                             <div className="flex items-start gap-4 overflow-hidden">
@@ -83,27 +96,19 @@ const ViewSummary = () => {
 
                             {/* Decorative/Action Toolbar Buttons */}
                             <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
-                                <button 
-                                    className="p-2.5 bg-white border border-gray-150 hover:bg-gray-50 rounded-xl text-gray-400 hover:text-indigo-500 transition-all cursor-not-allowed group relative"
-                                    title="Add Note"
-                                >
-                                    <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[10px] text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-md z-20">Add (Coming Soon)</span>
-                                </button>
-                                
-                                <button 
-                                    className="p-2.5 bg-white border border-gray-150 hover:bg-red-50/50 rounded-xl text-gray-400 hover:text-red-500 transition-all cursor-not-allowed group relative"
+
+
+                                <button onClick={deleteSummary}
+                                    className="p-2.5 bg-white border border-gray-150 hover:bg-red-50/50 rounded-xl text-gray-400 hover:text-red-500 transition-all cursor-pointer group relative"
                                     title="Delete Note"
                                 >
                                     <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[10px] text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-md z-20">Delete (Coming Soon)</span>
+                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[10px] text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-md z-20">Delete</span>
                                 </button>
 
-                                <button 
+                                <button
                                     className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[13px] font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-100 transition-all duration-300 cursor-not-allowed group relative"
                                     title="Download notes"
                                 >
@@ -119,7 +124,7 @@ const ViewSummary = () => {
                         {/* Summary Notes Card */}
                         <div className="bg-white/70 backdrop-blur-xl border border-white/80 p-6 sm:p-10 md:p-12 rounded-[2rem] sm:rounded-[2.5rem] w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-left relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-[100px] -z-10 opacity-50"></div>
-                            
+
                             {/* Structured text container */}
                             <div className="markdown-content">
                                 <ReactMarkdown>

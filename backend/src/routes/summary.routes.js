@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { generateSummary } = require('../controllers/summary.controller');
-const { getSummaries, getSummaryById } = require('../controllers/summary.controller')
+const { getSummaries, getSummaryById, deleteSummary } = require('../controllers/summary.controller')
 const multer = require('multer');
 const authMiddleware = require('../middlewares/auth.middleware');
 const { getSummary } = require('../services/Groq');
@@ -12,5 +12,6 @@ router.post('/upload', authMiddleware, upload.single('pdf'), generateSummary);
 
 router.get('/', authMiddleware, getSummaries);
 router.get('/:id', authMiddleware, getSummaryById);
+router.delete('/:id', authMiddleware, deleteSummary);
 
 module.exports = router;

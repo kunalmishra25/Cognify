@@ -12,7 +12,7 @@ const ViewSummary = () => {
     useEffect(() => {
         const getsummary = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/summary/${id}`, {
+                const response = await axios.get(`https://cognify-v5za.onrender.com/api/summary/${id}`, {
                     withCredentials: true
                 });
                 setSummary(response.data.data);
@@ -28,7 +28,7 @@ const ViewSummary = () => {
 
     const deleteSummary = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/summary/${id}`, {
+            await axios.delete(`https://cognify-v5za.onrender.com/api/summary/${id}`, {
                 withCredentials: true,
             })
             navigate('/mynotes')

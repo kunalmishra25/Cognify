@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuth = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/auth/me');
+            const response = await axios.get('https://cognify-v5za.onrender.com/api/auth/me');
             setUser(response.data.user);
         } catch (error) {
             setUser(null);
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('http://localhost:5000/api/auth/logout');
+            await axios.post('https://cognify-v5za.onrender.com/api/auth/logout');
         } catch (error) {
             console.error('Logout error:', error);
         } finally {

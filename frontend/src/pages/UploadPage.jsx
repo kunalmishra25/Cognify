@@ -18,7 +18,7 @@ const UploadPage = () => {
 
         try {
             const res = await axios.post(
-                'http://localhost:5000/api/summary/upload',
+                'https://cognify-v5za.onrender.com/api/summary/upload',
                 formData,
                 {
                     withCredentials: true

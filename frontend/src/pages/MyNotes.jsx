@@ -10,7 +10,7 @@ const MyNotes = () => {
     useEffect(() => {
         const getNotes = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/summary', {
+                const response = await axios.get('https://cognify-v5za.onrender.com/api/summary', {
                     withCredentials: true
                 });
                 const data = response.data.data;
@@ -27,7 +27,7 @@ const MyNotes = () => {
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20 pb-20">
             <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col">
-                
+
                 {/* Header Section */}
                 <div className="mb-8 md:mb-12 text-left">
                     <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">
@@ -70,8 +70,7 @@ const MyNotes = () => {
                             {notes.map((note) => (
                                 <div
                                     key={note._id}
-                                    onClick={() => navigate(`/summary/${note._id}`)}
-                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:-translate-y-1 hover:border-[#6B82F6]/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.1)] transition-all duration-300 cursor-pointer"
+                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:border-[#6B82F6]/20 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.07)] transition-all duration-300"
                                 >
                                     <div>
                                         {/* Card Header Info */}
@@ -105,12 +104,15 @@ const MyNotes = () => {
                                             </svg>
                                             Saved Note
                                         </span>
-                                        <span className="text-[#6B82F6] group-hover:translate-x-1 transition-transform flex items-center gap-0.5 font-semibold">
-                                            Read More
-                                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <button
+                                            onClick={() => navigate(`/summary/${note._id}`)}
+                                            className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[12px] font-semibold px-3.5 py-1.5 rounded-xl shadow-[0_4px_12px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200"
+                                        >
+                                            View
+                                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                                             </svg>
-                                        </span>
+                                        </button>
                                     </div>
                                 </div>
                             ))}

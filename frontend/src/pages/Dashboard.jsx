@@ -1,14 +1,32 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-    // Mock Data
-    const stats = {
-        documents: 12,
-        flashcards: 145,
-        quizzes: 8,
-        streak: 3
-    };
+
+    const [stats, setStats] = useState({
+        documents: 0,
+        flashcards: 0,
+        quizzes: 0,
+        streak: 0,
+    });
+
+    useEffect(() => {
+        const getStats = async () => {
+            try {
+                const response = await axios.get('https://cognify-v5za.onrender.com/api/dashboard/stats',
+                    {
+                        withCredentials: true,
+                    }
+                );
+                setStats(response.data.data);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getStats()
+    }, [])
 
     const recentUploads = [
         { id: 1, name: 'Biology_Chapter_4_Notes.pdf', size: '2.4 MB', date: '2 hours ago' },

@@ -5,3 +5,5 @@ const router = express.Router();
 
 
 router.get('/stats', authMiddleware, getDashboardStats)
+
+module.exports = router;

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import API_BASE_URL from '../config';
 
 const ViewSummary = () => {
     const { id } = useParams();
@@ -12,7 +13,7 @@ const ViewSummary = () => {
     useEffect(() => {
         const getsummary = async () => {
             try {
-                const response = await axios.get(`https://cognify-v5za.onrender.com/api/summary/${id}`, {
+                const response = await axios.get(`${API_BASE_URL}/summary/${id}`, {
                     withCredentials: true
                 });
                 setSummary(response.data.data);
@@ -28,7 +29,7 @@ const ViewSummary = () => {
 
     const deleteSummary = async () => {
         try {
-            await axios.delete(`https://cognify-v5za.onrender.com/api/summary/${id}`, {
+            await axios.delete(`${API_BASE_URL}/summary/${id}`, {
                 withCredentials: true,
             })
             navigate('/mynotes')

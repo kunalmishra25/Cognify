@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import API_BASE_URL from '../config';
 const Dashboard = () => {
 
     const [stats, setStats] = useState({
@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
         const getStats = async () => {
             try {
-                const response = await axios.get('https://cognify-v5za.onrender.com/api/dashboard/stats',
+                const response = await axios.get(`${API_BASE_URL}/dashboard/stats`,
                     {
                         withCredentials: true,
                     }

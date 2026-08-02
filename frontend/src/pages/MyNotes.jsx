@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
+import API_BASE_URL from '../config';
 const MyNotes = () => {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const MyNotes = () => {
     useEffect(() => {
         const getNotes = async () => {
             try {
-                const response = await axios.get('https://cognify-v5za.onrender.com/api/summary', {
+                const response = await axios.get(`${API_BASE_URL}/summary`, {
                     withCredentials: true
                 });
                 const data = response.data.data;

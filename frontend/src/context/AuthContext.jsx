@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config';
 
 // Ensure credentials/cookies are automatically sent with all Axios requests
 axios.defaults.withCredentials = true;
@@ -12,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuth = async () => {
         try {
-            const response = await axios.get('https://cognify-v5za.onrender.com/api/auth/me');
+            const response = await axios.get(`${API_BASE_URL}/auth/me`);
             setUser(response.data.user);
         } catch (error) {
             setUser(null);
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post('https://cognify-v5za.onrender.com/api/auth/logout');
+            await axios.post(`${API_BASE_URL}/auth/logout`);
         } catch (error) {
             console.error('Logout error:', error);
         } finally {

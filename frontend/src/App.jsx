@@ -11,10 +11,8 @@ import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import MyNotes from './pages/MyNotes'
 import ViewSummary from './pages/ViewSummary'
+import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
-
-
-
 
 const App = () => {
     const location = useLocation();
@@ -36,10 +34,8 @@ const App = () => {
                         <Route path="/quiz" element={<Quiz />} />
                         <Route path="/flashcards" element={<FlashcardsPage />} />
                         <Route path="/mynotes" element={<MyNotes />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/summary/:id" element={<ViewSummary />} />
-
-
-
                     </Route>
                 </Routes>
             </main>

@@ -4,6 +4,7 @@ import Logo from '../components/Logo';
 import authLogo from '../assets/logo_bgremove.png';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import API_BASE_URL from '../config';
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +44,7 @@ const Signup = () => {
             password,
         }
         try {
-            const response = await axios.post("https://cognify-v5za.onrender.com/api/auth/register", userdata);
+            const response = await axios.post(`${API_BASE_URL}/auth/register`, userdata);
             setUser(response.data.user);
             setfullname("");
             setemail("");

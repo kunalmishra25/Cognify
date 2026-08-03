@@ -58,7 +58,7 @@ async function getSummaryById(req, res) {
 
         const summary = await summaryModel.findById(id);
         if (!summary) {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "Summary Not found"
             })

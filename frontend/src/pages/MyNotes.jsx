@@ -70,7 +70,8 @@ const MyNotes = () => {
                             {notes.map((note) => (
                                 <div
                                     key={note._id}
-                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:border-[#6B82F6]/20 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.07)] transition-all duration-300"
+                                    onClick={() => navigate(`/study-options/${note._id}`, { state: { note } })}
+                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:border-[#6B82F6]/20 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.07)] transition-all duration-300 cursor-pointer"
                                 >
                                     <div>
                                         {/* Card Header Info */}
@@ -105,10 +106,13 @@ const MyNotes = () => {
                                             Saved Note
                                         </span>
                                         <button
-                                            onClick={() => navigate(`/summary/${note._id}`)}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/study-options/${note._id}`, { state: { note } });
+                                            }}
                                             className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[12px] font-semibold px-3.5 py-1.5 rounded-xl shadow-[0_4px_12px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200"
-                                        >
-                                            View
+                                        > Study Now
+
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                                             </svg>

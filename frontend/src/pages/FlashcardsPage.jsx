@@ -1,8 +1,39 @@
+import axios from 'axios';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const FlashcardsPage = () => {
     const navigate = useNavigate();
+
+    const { id } = useParams();
+
+    const [flashcards, setflashcards] = useState(null);
+    const [loading, setloading] = useState(true);
+    const [currentCard, setCurrentCard] = useState(0);
+    const [showAnswer, setShowAnswer] = useState(false);
+
+    useEffect(() => {
+        const getflashcard = async () => {
+            try {
+                const response = await axios.get(
+                    `${API_BASE_URL}/auth/flashcards/${id}`,
+                    {
+                        withCredentials: true
+                    }
+                );
+                setflashcards(response.data.data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setloading(false);
+            }
+        }
+        getflashcard();
+    }, [id]);
+    console.log(flashcards);
 
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20">
@@ -11,7 +42,7 @@ const FlashcardsPage = () => {
                     <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">Flashcards</h1>
                     <p className="text-[14px] sm:text-[16px] text-gray-500 mt-3 md:mt-4 max-w-lg mx-auto font-medium px-4">Master your study material with AI-generated flashcards for active recall.</p>
                 </div>
-                
+
                 <div className="flex-1 flex flex-col items-center justify-center w-full pb-20">
                     <div className="text-center bg-white/60 backdrop-blur-xl p-8 sm:p-14 rounded-[2rem] sm:rounded-[2.5rem] border border-white/80 w-full max-w-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-full shadow-inner flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-white">

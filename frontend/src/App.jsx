@@ -11,6 +11,7 @@ import Navbar from './components/Navbar'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import MyNotes from './pages/MyNotes'
 import ViewSummary from './pages/ViewSummary'
+import StudyOptions from './pages/StudyOptions'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
 
@@ -36,6 +37,7 @@ const App = () => {
                         <Route path="/mynotes" element={<MyNotes />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/summary/:id" element={<ViewSummary />} />
+                        <Route path="/study-options/:id" element={<StudyOptions />} />
                     </Route>
                 </Routes>
             </main>

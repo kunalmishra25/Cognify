@@ -10,6 +10,7 @@ const StudyOptions = () => {
 
     const [note, setNote] = useState(location.state?.note || null);
     const [loading, setLoading] = useState(!location.state?.note && !!id);
+    const [generatingFlashcards, setGeneratingFlashcards] = useState(false);
 
     useEffect(() => {
         if (!note && id) {
@@ -33,12 +34,51 @@ const StudyOptions = () => {
         navigate(`/summary/${id}`);
     };
 
-    const handleFlashcards = () => {
-        navigate('/flashcards', { state: { documentId: id } });
+
+    // handleFlashcards() first checks whether flashcards already exist for the selected summary. 
+    // If they do, it opens them; if they don't, 
+    // it generates, saves, and then opens them automatically.
+    const handleFlashcards = async () => {
+        if (generatingFlashcards) return;
+        setGeneratingFlashcards(true);
+        try {
+            const response = await axios.get(
+                `${API_BASE_URL}/flashcards/summary/${id}`,
+                {
+                    withCredentials: true,
+                }
+            );
+
+            navigate(`/flashcards/${response.data.data._id}`);
+
+        } catch (error) {
+
+            if (error.response?.status === 404) {
+                try {
+                    const response = await axios.post(
+                        `${API_BASE_URL}/flashcards/generate`,
+                        {
+                            summaryId: id,
+                        },
+                        {
+                            withCredentials: true,
+                        }
+                    );
+
+                    navigate(`/flashcards/${response.data.data._id}`);
+                } catch (genError) {
+                    console.error("Error generating flashcards:", genError);
+                    setGeneratingFlashcards(false);
+                }
+            } else {
+                console.error("Error fetching flashcards:", error);
+                setGeneratingFlashcards(false);
+            }
+        }
     };
 
     const handleQuizClick = () => {
-        // UI visual placeholder only - no logic, navigation, or API calls
+
     };
 
     return (
@@ -83,7 +123,7 @@ const StudyOptions = () => {
 
                         {/* Cards Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-2">
-                            
+
                             {/* Card 1: View Summary */}
                             <div
                                 onClick={handleViewSummary}
@@ -111,8 +151,20 @@ const StudyOptions = () => {
                             {/* Card 2: Flashcards */}
                             <div
                                 onClick={handleFlashcards}
-                                className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-amber-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(245,158,11,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+                                className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-amber-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(245,158,11,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer overflow-hidden"
                             >
+                                {generatingFlashcards && (
+                                    <div className="absolute inset-0 bg-white/95 backdrop-blur-md z-10 flex flex-col items-center justify-center p-6 text-center transition-all duration-300 animate-fadeIn">
+                                        <div className="w-12 h-12 mb-3.5 text-amber-500 flex items-center justify-center bg-amber-50 rounded-2xl border border-amber-100 shadow-inner">
+                                            <svg className="animate-spin w-7 h-7 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 className="text-base font-bold text-gray-800 tracking-tight">Generating Flashcards...</h4>
+                                        <p className="text-[12px] text-gray-500 mt-1 max-w-[200px] leading-relaxed">Extracting key concepts & building your study deck</p>
+                                    </div>
+                                )}
                                 <div>
                                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 text-amber-600 flex items-center justify-center text-2xl mb-6 shadow-sm border border-amber-100/60 group-hover:scale-110 transition-transform duration-300">
                                         🃏

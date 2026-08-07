@@ -5,12 +5,20 @@ const flashcardSchema = new mongoose.Schema(
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "user",
-            required: true
+            required: true,
         },
+
+        summaryId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Summary",
+            required: true,
+        },
+
         fileName: {
             type: String,
-            required: true
+            required: true,
         },
+
         flashcards: [
             {
                 question: {
@@ -28,5 +36,7 @@ const flashcardSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
 const flashcardModel = mongoose.model("Flashcard", flashcardSchema);
+
 module.exports = flashcardModel;

@@ -106,6 +106,7 @@ ${text}
 
     } catch (error) {
         console.error("Groq Quiz Error:", error);
+        throw error;
     }
 }
 

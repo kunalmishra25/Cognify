@@ -11,6 +11,7 @@ const StudyOptions = () => {
     const [note, setNote] = useState(location.state?.note || null);
     const [loading, setLoading] = useState(!location.state?.note && !!id);
     const [generatingFlashcards, setGeneratingFlashcards] = useState(false);
+    const [generatingQuiz, setGeneratingQuiz] = useState(false);
 
     useEffect(() => {
         if (!note && id) {
@@ -78,41 +79,33 @@ const StudyOptions = () => {
     };
 
     const handleQuiz = async () => {
+        if (generatingQuiz) return;
+        setGeneratingQuiz(true);
         try {
             // Check if quiz already exists
             const response = await axios.get(
                 `${API_BASE_URL}/quiz/summary/${id}`,
-                {
-                    withCredentials: true,
-                }
+                { withCredentials: true }
             );
-
             // Quiz exists → open it
             navigate(`/quiz/${response.data.data._id}`);
-
         } catch (error) {
-
             if (error.response?.status === 404) {
                 try {
                     // Quiz doesn't exist → generate it
                     const response = await axios.post(
                         `${API_BASE_URL}/quiz/generate`,
-                        {
-                            summaryId: id,
-                        },
-                        {
-                            withCredentials: true,
-                        }
+                        { summaryId: id },
+                        { withCredentials: true }
                     );
-
-                    // Open newly generated quiz
                     navigate(`/quiz/${response.data.data._id}`);
                 } catch (generateError) {
                     console.error("Error generating quiz:", generateError);
+                    setGeneratingQuiz(false);
                 }
-
             } else {
                 console.error("Error checking quiz:", error);
+                setGeneratingQuiz(false);
             }
         }
     };
@@ -221,11 +214,23 @@ const StudyOptions = () => {
                                 </div>
                             </div>
 
-                            {/* Card 3: Quiz (Visual Placeholder Only) */}
+                            {/* Card 3: Quiz */}
                             <div
                                 onClick={handleQuiz}
-                                className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-purple-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(168,85,247,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+                                className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-purple-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(168,85,247,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer overflow-hidden"
                             >
+                                {generatingQuiz && (
+                                    <div className="absolute inset-0 bg-white/95 backdrop-blur-md z-10 flex flex-col items-center justify-center p-6 text-center">
+                                        <div className="w-12 h-12 mb-3.5 flex items-center justify-center bg-purple-50 rounded-2xl border border-purple-100 shadow-inner">
+                                            <svg className="animate-spin w-7 h-7 text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                        </div>
+                                        <h4 className="text-base font-bold text-gray-800 tracking-tight">Generating Quiz...</h4>
+                                        <p className="text-[12px] text-gray-500 mt-1 max-w-[200px] leading-relaxed">Building your personalised question set</p>
+                                    </div>
+                                )}
                                 <div>
                                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-50 to-fuchsia-50 text-purple-600 flex items-center justify-center text-2xl mb-6 shadow-sm border border-purple-100/60 group-hover:scale-110 transition-transform duration-300">
                                         ❓

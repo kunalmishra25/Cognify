@@ -1,28 +1,191 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
 
 const Quiz = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
+    const [quiz, setQuiz] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [score, setScore] = useState(0);
+    const [quizCompleted, setQuizCompleted] = useState(false);
 
-    return (
-        <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20">
-            <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col">
-                <div className="mb-8 md:mb-12 text-center">
-                    <h1 className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">Dynamic Quizzes</h1>
-                    <p className="text-[14px] sm:text-[16px] text-gray-500 mt-3 md:mt-4 max-w-lg mx-auto font-medium px-4">Test your knowledge with multiple-choice questions based on your notes.</p>
-                </div>
-                
-                <div className="flex-1 flex flex-col items-center justify-center w-full pb-20">
-                    <div className="text-center bg-white/60 backdrop-blur-xl p-8 sm:p-14 rounded-[2rem] sm:rounded-[2.5rem] border border-white/80 w-full max-w-lg shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-indigo-50 to-blue-50 rounded-full shadow-inner flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-white">
-                            <svg className="w-10 h-10 sm:w-12 sm:h-12 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 tracking-tight">Ready for a Quiz?</h3>
-                        <p className="text-gray-500 mb-8 sm:mb-10 text-[14px] sm:text-[16px] leading-relaxed px-2 sm:px-4">Upload your study materials to instantly generate a custom multiple-choice quiz.</p>
-                        <button onClick={() => navigate('/upload')} className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl font-semibold transition-all duration-300 shadow-[0_8px_20px_rgba(99,102,241,0.3)] hover:shadow-[0_8px_25px_rgba(99,102,241,0.45)] hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] text-[15px] sm:text-[16px]">Upload Material</button>
-                    </div>
-                </div>
+    useEffect(() => {
+        const getQuiz = async () => {
+            try {
+                const response = await axios.get(
+                    `${API_BASE_URL}/quiz/${id}`,
+                    {
+                        withCredentials: true,
+                    }
+                );
+
+                console.log("Quiz response:", response.data);
+
+                setQuiz(response.data.data);
+            } catch (error) {
+                console.error("Error fetching quiz:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getQuiz();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <h1>Loading...</h1>
             </div>
+        );
+    }
+
+    if (!quiz) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <h1>Quiz not found</h1>
+            </div>
+        );
+    }
+    if (quizCompleted) {
+        const percentage = Math.round(
+            (score / quiz.quiz.length) * 100
+        );
+
+        let message;
+
+        if (percentage >= 80) {
+            message = "Excellent work! 🎉";
+        } else if (percentage >= 60) {
+            message = "Good job! 👍";
+        } else if (percentage >= 40) {
+            message = "Keep practicing! 💪";
+        } else {
+            message = "Don't give up. Keep learning! 📚";
+        }
+
+        return (
+            <div className="min-h-screen flex items-center justify-center p-6">
+
+                <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl p-8 text-center">
+
+                    <h1 className="text-3xl font-bold text-gray-800">
+                        Quiz Completed 🎉
+                    </h1>
+
+                    <p className="mt-6 text-lg text-gray-500">
+                        Your Score
+                    </p>
+
+                    <p className="mt-2 text-5xl font-bold text-blue-600">
+                        {score} / {quiz.quiz.length}
+                    </p>
+
+                    <p className="mt-4 text-2xl font-semibold text-gray-700">
+                        {percentage}%
+                    </p>
+
+                    <p className="mt-4 text-lg text-gray-500">
+                        {message}
+                    </p>
+                    <div className="flex gap-4 justify-center mt-8">
+
+                        <button
+                            onClick={() => {
+                                setCurrentQuestion(0);
+                                setSelectedAnswer(null);
+                                setScore(0);
+                                setQuizCompleted(false);
+                            }}
+                            className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition"
+                        >
+                            Try Again
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/notes")}
+                            className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition"
+                        >
+                            Back to Notes
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        );
+    }
+
+    const currentQuizQuestion = quiz.quiz[currentQuestion];
+
+    const handleNext = () => {
+        const isCorrect =
+            selectedAnswer === currentQuizQuestion.correctAnswer;
+        const updatedScore = isCorrect
+            ? score + 1
+            : score;
+
+        if (currentQuestion < quiz.quiz.length - 1) {
+            if (isCorrect) {
+                setScore((prevScore) => prevScore + 1);
+            }
+            setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+            setSelectedAnswer(null);
+        } else {
+            setScore(updatedScore);
+            setQuizCompleted(true);
+        }
+    };
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center p-6">
+
+            {/* File Name */}
+            <h1 className="text-3xl font-bold">
+                {quiz.fileName}
+            </h1>
+
+            {/* Question Counter */}
+            <p className="mt-4 text-gray-500">
+                Question {currentQuestion + 1} / {quiz.quiz.length}
+            </p>
+
+            {/* Question */}
+            <h2 className="mt-8 text-2xl font-semibold text-center max-w-2xl">
+                {currentQuizQuestion.question}
+            </h2>
+
+            {/* Options */}
+            <div className="mt-8 w-full max-w-lg space-y-4">
+                {currentQuizQuestion.options.map((option, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setSelectedAnswer(option)}
+                        className={`w-full p-4 text-left rounded-xl border transition ${selectedAnswer === option
+                            ? "border-blue-600 bg-blue-50"
+                            : "border-gray-200 bg-white hover:bg-gray-50"
+                            }`}
+                    >
+                        {option}
+                    </button>
+                ))}
+            </div>
+
+            {/* Next / Finish */}
+            <button
+                disabled={!selectedAnswer}
+                onClick={handleNext}
+                className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                {currentQuestion === quiz.quiz.length - 1
+                    ? "Finish"
+                    : "Next"}
+            </button>
+
         </div>
     );
 };

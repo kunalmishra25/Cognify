@@ -77,9 +77,46 @@ const StudyOptions = () => {
         }
     };
 
-    const handleQuizClick = () => {
+    const handleQuiz = async () => {
+        try {
+            // Check if quiz already exists
+            const response = await axios.get(
+                `${API_BASE_URL}/quiz/summary/${id}`,
+                {
+                    withCredentials: true,
+                }
+            );
 
+            // Quiz exists → open it
+            navigate(`/quiz/${response.data.data._id}`);
+
+        } catch (error) {
+
+            if (error.response?.status === 404) {
+                try {
+                    // Quiz doesn't exist → generate it
+                    const response = await axios.post(
+                        `${API_BASE_URL}/quiz/generate`,
+                        {
+                            summaryId: id,
+                        },
+                        {
+                            withCredentials: true,
+                        }
+                    );
+
+                    // Open newly generated quiz
+                    navigate(`/quiz/${response.data.data._id}`);
+                } catch (generateError) {
+                    console.error("Error generating quiz:", generateError);
+                }
+
+            } else {
+                console.error("Error checking quiz:", error);
+            }
+        }
     };
+
 
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20 pb-20">
@@ -186,7 +223,7 @@ const StudyOptions = () => {
 
                             {/* Card 3: Quiz (Visual Placeholder Only) */}
                             <div
-                                onClick={handleQuizClick}
+                                onClick={handleQuiz}
                                 className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-purple-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(168,85,247,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
                             >
                                 <div>

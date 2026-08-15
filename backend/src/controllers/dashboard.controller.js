@@ -1,16 +1,26 @@
 const summaryModel = require("../models/summary.model");
+const flashcardModel = require("../models/flashcard.model")
+const quizModel = require("../models/quiz.model")
+
 
 async function getDashboardStats(req, res) {
     try {
         const totalNotes = await summaryModel.countDocuments({
             userId: req.user._id,
         });
+        const totalflashcards = await flashcardModel.countDocuments({
+            userId: req.user._id,
+        })
+        const totalquiz = await quizModel.countDocuments({
+            userId: req.user._id,
+        })
+
         res.status(200).json({
             success: true,
             data: {
                 documents: totalNotes,
-                flashcards: 0,
-                quizzes: 0,
+                flashcards: totalflashcards,
+                quizzes: totalquiz,
                 streak: 0,
             },
         });

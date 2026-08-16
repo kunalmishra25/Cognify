@@ -15,13 +15,20 @@ async function getDashboardStats(req, res) {
             userId: req.user._id,
         })
 
+        const recentuploads = await summaryModel
+            .find({ userId: req.user._id })
+            .sort({ createdAt: -1 })
+            .limit(4)
+            .select("_id fileName createdAt");
+
+
         res.status(200).json({
             success: true,
             data: {
                 documents: totalNotes,
                 flashcards: totalflashcards,
                 quizzes: totalquiz,
-                streak: 0,
+                recentuploads,
             },
         });
     } catch (error) {

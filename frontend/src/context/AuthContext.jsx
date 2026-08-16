@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../config';
 
@@ -8,6 +8,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const checkAuth = async () => {
         try {
@@ -28,6 +29,11 @@ export const AuthProvider = ({ children }) => {
             return null;
         }
     };
+
+    // On mount, verify session so refresh doesn't log user out
+    useEffect(() => {
+        checkAuth().finally(() => setLoading(false));
+    }, []);
 
     const logout = async () => {
         try {
@@ -52,6 +58,7 @@ export const AuthProvider = ({ children }) => {
                 setUser,
                 checkAuth,
                 logout,
+                loading,
             }}
         >
             {children}

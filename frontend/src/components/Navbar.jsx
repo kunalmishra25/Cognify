@@ -32,8 +32,54 @@ const Navbar = () => {
     const visibleLinks = navLinks;
     const mobileBottomLinks = navLinks;
 
+    // ── Logout confirmation modal state ──
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+    const confirmLogout = async () => {
+        setShowLogoutModal(false);
+        await handleLogout();
+    };
+
     return (
         <>
+            {/* ── Logout Confirmation Modal ── */}
+            {showLogoutModal && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center">
+                    {/* Backdrop */}
+                    <div
+                        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+                        onClick={() => setShowLogoutModal(false)}
+                    />
+                    {/* Card */}
+                    <div className="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-sm mx-auto p-7 flex flex-col items-center gap-5 animate-in fade-in zoom-in-95 duration-200">
+                        {/* Icon */}
+                        <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
+                            <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </div>
+                        <div className="text-center">
+                            <h2 className="text-[17px] font-bold text-gray-900 mb-1">Log out?</h2>
+                            <p className="text-sm text-gray-500">You'll need to sign in again to access your account.</p>
+                        </div>
+                        <div className="flex gap-3 w-full mt-1">
+                            <button
+                                onClick={() => setShowLogoutModal(false)}
+                                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={confirmLogout}
+                                className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-sm font-semibold text-white transition-colors shadow-md shadow-red-500/20"
+                            >
+                                Log out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Desktop Sidebar */}
             <nav className="fixed left-0 top-0 h-screen w-64 z-50 bg-white border-r border-gray-100 hidden md:flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                 {/* Header Section */}
@@ -81,7 +127,7 @@ const Navbar = () => {
                         </div>
                         {isLoggedIn && (
                             <button
-                                onClick={handleLogout}
+                                onClick={() => setShowLogoutModal(true)}
                                 title="Logout"
                                 className="ml-auto p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 cursor-pointer"
                             >
@@ -188,7 +234,7 @@ const Navbar = () => {
                                 </div>
                                 {isLoggedIn && (
                                     <button
-                                        onClick={handleLogout}
+                                        onClick={() => { setIsMobileMenuOpen(false); setShowLogoutModal(true); }}
                                         title="Logout"
                                         className="ml-auto p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 cursor-pointer"
                                     >

@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API_BASE_URL from '../config';
+
 const Dashboard = () => {
 
     const [stats, setStats] = useState({
         documents: 0,
         flashcards: 0,
         quizzes: 0,
-        streak: 0,
+        recentuploads: [],
     });
 
     useEffect(() => {
@@ -28,11 +29,6 @@ const Dashboard = () => {
         getStats()
     }, [])
 
-    const recentUploads = [
-        { id: 1, name: 'Biology_Chapter_4_Notes.pdf', size: '2.4 MB', date: '2 hours ago' },
-        { id: 2, name: 'Machine_Learning_Intro.pdf', size: '4.1 MB', date: 'Yesterday' },
-        { id: 3, name: 'History_Essay_Draft.pdf', size: '1.2 MB', date: '3 days ago' },
-    ];
 
     const recentQuizzes = [
         { id: 1, topic: 'Cellular Respiration', score: '85%', date: 'Today' },
@@ -54,22 +50,18 @@ const Dashboard = () => {
                 </div>
 
                 {/* Stats Row */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+                <div className="grid grid-cols-3 gap-3 md:gap-6">
                     <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.25rem] sm:rounded-[1.5rem] p-4 sm:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
                         <span className="text-gray-500 text-[11px] sm:text-sm font-semibold mb-1 uppercase tracking-wider">Documents</span>
                         <span className="text-2xl sm:text-3xl font-black text-gray-800">{stats.documents}</span>
                     </div>
-                    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.25rem] sm:rounded-[1.5rem] p-4 sm:p-5 shadow-[0_8px_30_rgb(0,0,0,0.04)] flex flex-col">
+                    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.25rem] sm:rounded-[1.5rem] p-4 sm:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
                         <span className="text-gray-500 text-[11px] sm:text-sm font-semibold mb-1 uppercase tracking-wider">Flashcards</span>
                         <span className="text-2xl sm:text-3xl font-black text-blue-600">{stats.flashcards}</span>
                     </div>
                     <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.25rem] sm:rounded-[1.5rem] p-4 sm:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
                         <span className="text-gray-500 text-[11px] sm:text-sm font-semibold mb-1 uppercase tracking-wider">Quizzes</span>
                         <span className="text-2xl sm:text-3xl font-black text-purple-600">{stats.quizzes}</span>
-                    </div>
-                    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.25rem] sm:rounded-[1.5rem] p-4 sm:p-5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
-                        <span className="text-gray-500 text-[11px] sm:text-sm font-semibold mb-1 uppercase tracking-wider">Streak</span>
-                        <span className="text-2xl sm:text-3xl font-black text-orange-500">{stats.streak} <span className="text-sm sm:text-lg text-orange-400">Days</span></span>
                     </div>
                 </div>
 
@@ -114,18 +106,42 @@ const Dashboard = () => {
                                 <Link to="/upload" className="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">View All</Link>
                             </div>
                             <div className="flex flex-col gap-3">
-                                {recentUploads.map((file) => (
-                                    <div key={file.id} className="group flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer">
+                                {stats.recentuploads.map((file) => (
+                                    <div
+                                        key={file._id}
+                                        className="group flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer"
+                                    >
                                         <div className="flex items-center gap-3 sm:gap-4 overflow-hidden">
+
                                             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
-                                                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" /></svg>
+                                                <svg
+                                                    className="w-4 h-4 sm:w-5 sm:h-5"
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
                                             </div>
+
                                             <div className="flex flex-col truncate">
-                                                <span className="text-[14px] sm:text-[15px] font-bold text-gray-800 truncate">{file.name}</span>
-                                                <span className="text-[10px] sm:text-xs text-gray-500 font-medium">{file.size}</span>
+                                                <span className="text-[14px] sm:text-[15px] font-bold text-gray-800 truncate">
+                                                    {file.fileName}
+                                                </span>
+
+                                                <span className="text-[10px] sm:text-xs text-gray-500 font-medium">
+                                                    PDF Document
+                                                </span>
                                             </div>
+
                                         </div>
-                                        <div className="text-[10px] sm:text-xs text-gray-400 font-medium shrink-0 ml-2 sm:ml-4">{file.date}</div>
+
+                                        <div className="text-[10px] sm:text-xs text-gray-400 font-medium shrink-0 ml-2 sm:ml-4">
+                                            {new Date(file.createdAt).toLocaleDateString()}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

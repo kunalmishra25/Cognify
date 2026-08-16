@@ -21,6 +21,11 @@ async function getDashboardStats(req, res) {
             .limit(4)
             .select("_id fileName createdAt");
 
+        const recentQuizzes = await quizModel
+            .find({ userId: req.user._id })
+            .sort({ createdAt: -1 })
+            .limit(4)
+            .select("_id fileName createdAt");
 
         res.status(200).json({
             success: true,
@@ -29,6 +34,7 @@ async function getDashboardStats(req, res) {
                 flashcards: totalflashcards,
                 quizzes: totalquiz,
                 recentuploads,
+                recentQuizzes,
             },
         });
     } catch (error) {

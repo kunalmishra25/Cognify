@@ -10,6 +10,7 @@ const Dashboard = () => {
         flashcards: 0,
         quizzes: 0,
         recentuploads: [],
+        recentQuizzes: [],
     });
 
     useEffect(() => {
@@ -30,10 +31,6 @@ const Dashboard = () => {
     }, [])
 
 
-    const recentQuizzes = [
-        { id: 1, topic: 'Cellular Respiration', score: '85%', date: 'Today' },
-        { id: 2, topic: 'Neural Networks basics', score: '92%', date: 'Yesterday' },
-    ];
 
     const usageHistory = [40, 70, 45, 90, 65, 30, 85]; // Mock chart data
 
@@ -154,19 +151,21 @@ const Dashboard = () => {
                                 <Link to="/quiz" className="text-sm font-semibold text-purple-600 hover:text-purple-500 transition-colors">Take New</Link>
                             </div>
                             <div className="flex flex-col gap-3">
-                                {recentQuizzes.map((quiz) => (
-                                    <div key={quiz.id} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer">
+                                {stats.recentQuizzes.map((quiz) => (
+                                    <div key={quiz._id} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer">
                                         <div className="flex items-center gap-4 overflow-hidden">
                                             <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
                                                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             </div>
                                             <div className="flex flex-col truncate">
-                                                <span className="text-[15px] font-bold text-gray-800 truncate">{quiz.topic}</span>
-                                                <span className="text-xs text-gray-500 font-medium">{quiz.date}</span>
+                                                <span className="text-[15px] font-bold text-gray-800 truncate">{quiz.fileName}</span>
+                                                <span className="text-xs text-gray-500 font-medium">
+                                                    {new Date(quiz.createdAt).toLocaleDateString()}
+                                                </span>
                                             </div>
                                         </div>
-                                        <div className="px-3 py-1 bg-green-50 text-green-600 font-bold text-sm rounded-lg shrink-0 ml-4">
-                                            {quiz.score}
+                                        <div className="px-3 py-1 bg-purple-50 text-purple-600 font-bold text-sm rounded-lg shrink-0 ml-4">
+                                            Quiz
                                         </div>
                                     </div>
                                 ))}

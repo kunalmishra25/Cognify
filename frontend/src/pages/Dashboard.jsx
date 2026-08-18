@@ -32,7 +32,6 @@ const Dashboard = () => {
 
 
 
-    const usageHistory = [40, 70, 45, 90, 65, 30, 85]; // Mock chart data
 
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-16 pb-24">
@@ -62,14 +61,11 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                {/* Main Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+                {/* Main Content */}
+                <div className="flex flex-col gap-6 md:gap-8">
 
-                    {/* Left Column */}
-                    <div className="lg:col-span-2 flex flex-col gap-6 md:gap-8">
-
-                        {/* Quick Actions */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {/* Quick Actions */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
                             <Link to="/upload" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(107,130,246,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
                                 <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/30 group-hover:scale-110 transition-all duration-300">
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
@@ -172,38 +168,6 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                    </div>
-
-                    {/* Right Column */}
-                    <div className="flex flex-col gap-6 md:gap-8">
-
-                        {/* Usage History */}
-                        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2rem] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
-                            <h3 className="text-xl font-bold text-gray-800 mb-6">Usage History</h3>
-                            <div className="flex items-end justify-between h-32 gap-2 mt-auto">
-                                {usageHistory.map((value, idx) => (
-                                    <div key={idx} className="w-full relative group flex justify-center">
-                                        <div
-                                            className="w-full max-w-[24px] bg-indigo-100 group-hover:bg-indigo-400 rounded-t-md transition-all duration-300"
-                                            style={{ height: `${value}%` }}
-                                        ></div>
-                                        {/* Tooltip mockup */}
-                                        <div className="absolute -top-8 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                                            {value} pts
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex justify-between mt-3 text-xs font-semibold text-gray-400">
-                                <span>Mon</span>
-                                <span>Wed</span>
-                                <span>Sun</span>
-                            </div>
-                        </div>
-
-
-
-                    </div>
                 </div>
             </div>
         </div>

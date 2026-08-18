@@ -12,6 +12,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 import MyNotes from './pages/MyNotes'
 import ViewSummary from './pages/ViewSummary'
 import StudyOptions from './pages/StudyOptions'
+import FlashcardDecks from './pages/FlashcardDecks'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
 
@@ -33,11 +34,14 @@ const App = () => {
                         <Route path="/upload" element={<UploadPage />} />
                         <Route path="/summary" element={<SummaryPage />} />
                         <Route path="/quiz/:id" element={<Quiz />} />
+                        <Route path="/flashcards" element={<FlashcardDecks />} />
                         <Route path="/flashcards/:id" element={<FlashcardsPage />} />
                         <Route path="/mynotes" element={<MyNotes />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/summary/:id" element={<ViewSummary />} />
-                        <Route path="/study-options/:id" element={<StudyOptions />} />
+                        <Route path="/study-options/:id" element={<StudyOptions />}
+
+                        />
                     </Route>
                 </Routes>
             </main>

@@ -10,6 +10,30 @@ const ViewSummary = () => {
     const [summary, setSummary] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const handledownload = () => {
+        if (!summary) return;
+
+        const summaryText = typeof summary === "string" ? summary : summary?.summary || "";
+        if (!summaryText) return;
+
+        const blob = new Blob([summaryText], {
+            type: "text/plain;charset=utf-8",
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = summary?.fileName ? `${summary.fileName.replace(/\.pdf$/i, "")}-Summary.txt` : "Cognify-Summary.txt";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 1000);
+    };
+
     useEffect(() => {
         const getsummary = async () => {
             try {
@@ -82,17 +106,17 @@ const ViewSummary = () => {
                                 </div>
                             </div>
 
-                            {/* Decorative/Action Toolbar Buttons */}
+                            {/* Action Toolbar Buttons */}
                             <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
                                 <button
-                                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[13px] font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-100 transition-all duration-300 cursor-not-allowed group relative"
+                                    onClick={handledownload}
+                                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[13px] font-bold px-4 py-2.5 rounded-xl shadow-lg shadow-indigo-100 transition-all duration-300 cursor-pointer group relative"
                                     title="Download notes"
                                 >
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                     </svg>
                                     <span>Download</span>
-                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 text-[10px] text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-md z-20">Download (Coming Soon)</span>
                                 </button>
                             </div>
                         </div>

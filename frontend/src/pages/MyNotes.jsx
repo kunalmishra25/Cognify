@@ -2,9 +2,12 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from '../config';
+
 const MyNotes = () => {
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [noteToDelete, setNoteToDelete] = useState(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +25,23 @@ const MyNotes = () => {
             }
         }
         getNotes();
-    }, [])
+    }, []);
+
+    const handleDelete = async () => {
+        if (!noteToDelete) return;
+        setIsDeleting(true);
+        try {
+            await axios.delete(`${API_BASE_URL}/summary/${noteToDelete._id}`, {
+                withCredentials: true
+            });
+            setNotes(prevNotes => prevNotes.filter(n => n._id !== noteToDelete._id));
+            setNoteToDelete(null);
+        } catch (error) {
+            console.error("Error deleting note:", error);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-10 md:pt-20 pb-20">
@@ -71,7 +90,7 @@ const MyNotes = () => {
                                 <div
                                     key={note._id}
                                     onClick={() => navigate(`/study-options/${note._id}`, { state: { note } })}
-                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:border-[#6B82F6]/20 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.07)] transition-all duration-300 cursor-pointer"
+                                    className="group flex flex-col justify-between p-6 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/80 hover:border-[#6B82F6]/20 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgba(107,130,246,0.07)] transition-all duration-300 cursor-pointer relative"
                                 >
                                     <div>
                                         {/* Card Header Info */}
@@ -81,9 +100,23 @@ const MyNotes = () => {
                                                     <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
                                                 </svg>
                                             </div>
-                                            <span className="text-[11px] font-bold text-[#6B82F6] bg-indigo-50/60 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                                                Study Guide
-                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[11px] font-bold text-[#6B82F6] bg-indigo-50/60 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                                    Study Guide
+                                                </span>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setNoteToDelete(note);
+                                                    }}
+                                                    className="p-1.5 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50/80 transition-all duration-200"
+                                                    title="Delete Note"
+                                                >
+                                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
 
                                         {/* File Name */}
@@ -111,8 +144,8 @@ const MyNotes = () => {
                                                 navigate(`/study-options/${note._id}`, { state: { note } });
                                             }}
                                             className="flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-[12px] font-semibold px-3.5 py-1.5 rounded-xl shadow-[0_4px_12px_rgba(99,102,241,0.25)] hover:shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200"
-                                        > Study Now
-
+                                        >
+                                            Study Now
                                             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                                             </svg>
@@ -124,8 +157,57 @@ const MyNotes = () => {
                     )}
                 </div>
             </div>
+
+            {/* Confirmation Modal */}
+            {noteToDelete && (
+                <div 
+                    className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                    onClick={() => !isDeleting && setNoteToDelete(null)}
+                >
+                    <div 
+                        className="bg-white/95 backdrop-blur-xl border border-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl flex flex-col items-center text-center relative overflow-hidden"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="w-14 h-14 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-center mb-4 text-red-500 shadow-sm">
+                            <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-2">Delete Note?</h3>
+                        <p className="text-[14px] text-gray-500 mb-6 leading-relaxed">
+                            Are you sure you want to delete <span className="font-semibold text-gray-700">"{noteToDelete.fileName}"</span>? This action cannot be undone.
+                        </p>
+                        <div className="flex items-center gap-3 w-full">
+                            <button
+                                onClick={() => setNoteToDelete(null)}
+                                disabled={isDeleting}
+                                className="flex-1 px-4 py-2.5 rounded-xl text-gray-600 font-semibold bg-gray-100 hover:bg-gray-200 transition-all text-sm disabled:opacity-50 cursor-pointer"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                                className="flex-1 px-4 py-2.5 rounded-xl text-white font-semibold bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/25 transition-all text-sm flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                            >
+                                {isDeleting ? (
+                                    <>
+                                        <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Deleting...
+                                    </>
+                                ) : (
+                                    "Delete Note"
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default MyNotes;

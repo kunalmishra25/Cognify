@@ -1,5 +1,4 @@
 const Groq = require("groq-sdk");
-const { model } = require("mongoose");
 
 const groq = new Groq({
     apiKey: process.env.GROQ_API
@@ -8,13 +7,32 @@ const groq = new Groq({
 async function getSummary(text) {
     try {
         const response = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
             messages: [
                 {
-                    role: "user",
-                    content: `Summarize this into clean short study notes:\n\n${text}`,
+                    role: "system",
+                    content: `
+You are an AI study assistant.
+
+Convert the provided material into clean, short study notes.
+
+Rules:
+- Use normal Markdown.
+- Use headings and bullet points when useful.
+- Keep the notes concise and easy for students to study.
+- Do not create unnecessary tables.
+- Do not escape Markdown characters.
+- Do not output literal \\n characters.
+- Do not add greetings, conclusions, or unnecessary commentary.
+- Only summarize the information provided.
+                    `
                 },
+                {
+                    role: "user",
+                    content: text
+                }
             ],
-            model: "llama-3.1-8b-instant"
+            temperature: 0.3
         });
 
         return response.choices[0].message.content;
@@ -27,32 +45,40 @@ async function getSummary(text) {
 async function generateFlashcards(text) {
     try {
         const response = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
             messages: [
                 {
-                    role: "user",
+                    role: "system",
                     content: `
-                        You are an AI study assistant.
+You are an AI study assistant.
 
-                            Generate exactly 10 flashcards from the following text.
+Generate exactly 10 flashcards from the provided study material.
 
-                            Return ONLY valid JSON.     
+Return ONLY a valid JSON array.
 
-                                Format: 
-                                    [
-                                        {
-                                            "question": "Question here",
-                                            "answer": "Answer here"
-                                    }
-                                        ]
-                                            Text:${text},`
+Each flashcard must have exactly these fields:
+- question
+- answer
+
+Do not include Markdown.
+Do not include code fences.
+Do not include explanations.
+Do not include any text before or after the JSON.
+                    `
                 },
+                {
+                    role: "user",
+                    content: text
+                }
             ],
-            model: "llama-3.1-8b-instant"
+            response_format: {
+                type: "json_object"
+            },
+            temperature: 0.2
         });
 
         return response.choices[0].message.content;
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Groq Error:", error);
         throw error;
     }
@@ -61,45 +87,46 @@ async function generateFlashcards(text) {
 async function generateQuiz(text) {
     try {
         const response = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
             messages: [
                 {
-                    role: "user",
+                    role: "system",
                     content: `
-Create exactly 10 multiple-choice questions from the study material below.
+You are an AI study assistant.
+
+Create exactly 10 multiple-choice questions from the provided study material.
 
 Return ONLY valid JSON.
-Do not include markdown, code fences, explanations, or extra text.
 
-The JSON must be an array in this exact format:
+The JSON must contain a "questions" array.
 
-[
-    {
-        "question": "Question here",
-        "options": [
-            "Option A",
-            "Option B",
-            "Option C",
-            "Option D"
-        ],
-        "correctAnswer": "Option A"
-    }
-]
+Each question must have:
+- question
+- options
+- correctAnswer
 
 Rules:
-- Create exactly 10 questions.
-- Each question must have exactly 4 options.
-- Only one option should be correct.
-- The correctAnswer must exactly match one of the options.
-- Questions should be based only on the provided study material.
+- Exactly 10 questions.
+- Exactly 4 options per question.
+- Only one option is correct.
+- correctAnswer must exactly match one of the options.
+- Questions must be based only on the provided study material.
 - Keep questions clear and suitable for students.
-
-Study material:
-
-${text}
-                    `,
+- No Markdown.
+- No code fences.
+- No explanations.
+- No text outside the JSON.
+                    `
                 },
+                {
+                    role: "user",
+                    content: text
+                }
             ],
-            model: "llama-3.1-8b-instant",
+            response_format: {
+                type: "json_object"
+            },
+            temperature: 0.2
         });
 
         return response.choices[0].message.content;
@@ -110,4 +137,8 @@ ${text}
     }
 }
 
-module.exports = { getSummary, generateFlashcards, generateQuiz };
+module.exports = {
+    getSummary,
+    generateFlashcards,
+    generateQuiz
+};

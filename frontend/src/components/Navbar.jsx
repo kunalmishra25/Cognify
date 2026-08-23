@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
 
     const isLoggedIn = !!user;
     const userName = user?.fullname || 'Guest';
@@ -15,11 +14,6 @@ const Navbar = () => {
     const userInitials = user?.fullname
         ? user.fullname.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
         : 'G';
-
-    const handleLogout = async () => {
-        await logout();
-        navigate('/login');
-    };
 
     const navLinks = [
         { name: 'Dashboard', path: '/dashboard', icon: <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg> },
@@ -32,54 +26,8 @@ const Navbar = () => {
     const visibleLinks = navLinks;
     const mobileBottomLinks = navLinks;
 
-    // ── Logout confirmation modal state ──
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-    const confirmLogout = async () => {
-        setShowLogoutModal(false);
-        await handleLogout();
-    };
-
     return (
         <>
-            {/* ── Logout Confirmation Modal ── */}
-            {showLogoutModal && (
-                <div className="fixed inset-0 z-[200] flex items-center justify-center">
-                    {/* Backdrop */}
-                    <div
-                        className="absolute inset-0 bg-black/30 backdrop-blur-sm"
-                        onClick={() => setShowLogoutModal(false)}
-                    />
-                    {/* Card */}
-                    <div className="relative bg-white rounded-2xl shadow-2xl w-[90%] max-w-sm mx-auto p-7 flex flex-col items-center gap-5 animate-in fade-in zoom-in-95 duration-200">
-                        {/* Icon */}
-                        <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
-                            <svg className="w-7 h-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
-                        </div>
-                        <div className="text-center">
-                            <h2 className="text-[17px] font-bold text-gray-900 mb-1">Log out?</h2>
-                            <p className="text-sm text-gray-500">You'll need to sign in again to access your account.</p>
-                        </div>
-                        <div className="flex gap-3 w-full mt-1">
-                            <button
-                                onClick={() => setShowLogoutModal(false)}
-                                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={confirmLogout}
-                                className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-sm font-semibold text-white transition-colors shadow-md shadow-red-500/20"
-                            >
-                                Log out
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
             {/* Desktop Sidebar */}
             <nav className="fixed left-0 top-0 h-screen w-64 z-50 bg-white border-r border-gray-100 hidden md:flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
                 {/* Header Section */}
@@ -125,17 +73,6 @@ const Navbar = () => {
                             <span className="text-[14px] font-bold text-gray-800 truncate max-w-[110px] group-hover:text-[#6B82F6] transition-colors">{userName}</span>
                             <span className="text-[12px] text-gray-500 truncate max-w-[110px]">{userEmail || 'Free Plan'}</span>
                         </div>
-                        {isLoggedIn && (
-                            <button
-                                onClick={() => setShowLogoutModal(true)}
-                                title="Logout"
-                                className="ml-auto p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 cursor-pointer"
-                            >
-                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                            </button>
-                        )}
                     </div>
                 </div>
             </nav>
@@ -232,17 +169,6 @@ const Navbar = () => {
                                     <span className="text-sm font-bold text-gray-800 truncate max-w-[120px]">{userName}</span>
                                     <span className="text-[10px] text-gray-500 truncate max-w-[120px]">{userEmail || 'Free Plan'}</span>
                                 </div>
-                                {isLoggedIn && (
-                                    <button
-                                        onClick={() => { setIsMobileMenuOpen(false); setShowLogoutModal(true); }}
-                                        title="Logout"
-                                        className="ml-auto p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 cursor-pointer"
-                                    >
-                                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                        </svg>
-                                    </button>
-                                )}
                             </div>
                         </div>
                     </div>

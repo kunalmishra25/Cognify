@@ -10,7 +10,7 @@ const flashcardSchema = new mongoose.Schema(
 
         summaryId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Summary",
+            ref: "summary",
             required: true,
         },
 

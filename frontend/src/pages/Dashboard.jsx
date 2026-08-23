@@ -66,107 +66,107 @@ const Dashboard = () => {
 
                     {/* Quick Actions */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
-                            <Link to="/upload" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(107,130,246,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
-                                <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/30 group-hover:scale-110 transition-all duration-300">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-[#6B82F6] transition-colors leading-tight">Upload<br />Material</h3>
-                                </div>
-                            </Link>
-                            <Link to="/mynotes" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(168,85,247,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
-                                <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-fuchsia-600 text-white shadow-md shadow-purple-500/30 group-hover:scale-110 transition-all duration-300">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">My<br />Notes</h3>
-                                </div>
-                            </Link>
-                            <Link to="/flashcards" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(236,72,153,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
-                                <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/30 group-hover:scale-110 transition-all duration-300">
-                                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                                </div>
-                                <div className="flex-1">
-                                    <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-pink-600 transition-colors leading-tight">Flashcard<br />Decks</h3>
-                                </div>
-                            </Link>
-                        </div>
-
-                        {/* Recent Uploads */}
-                        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
-                            <div className="flex items-center justify-between mb-5 sm:mb-6">
-                                <h3 className="text-lg sm:text-xl font-bold text-gray-800">Recent Uploads</h3>
-                                <Link to="/upload" className="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">View All</Link>
+                        <Link to="/upload" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(107,130,246,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
+                            <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/30 group-hover:scale-110 transition-all duration-300">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
                             </div>
-                            <div className="flex flex-col gap-3">
-                                {stats.recentuploads.map((file) => (
-                                    <div
-                                        key={file._id}
-                                        className="group flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer"
-                                    >
-                                        <div className="flex items-center gap-3 sm:gap-4 overflow-hidden">
+                            <div className="flex-1">
+                                <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-[#6B82F6] transition-colors leading-tight">Upload<br />Material</h3>
+                            </div>
+                        </Link>
+                        <Link to="/mynotes" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(168,85,247,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
+                            <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-fuchsia-600 text-white shadow-md shadow-purple-500/30 group-hover:scale-110 transition-all duration-300">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">My<br />Notes</h3>
+                            </div>
+                        </Link>
+                        <Link to="/flashcards" className="group p-5 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(236,72,153,0.12)] hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4">
+                            <div className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/30 group-hover:scale-110 transition-all duration-300">
+                                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-[15px] font-bold text-gray-900 group-hover:text-pink-600 transition-colors leading-tight">Flashcard<br />Decks</h3>
+                            </div>
+                        </Link>
+                    </div>
 
-                                            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
-                                                <svg
-                                                    className="w-4 h-4 sm:w-5 sm:h-5"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </div>
+                    {/* Recent Uploads */}
+                    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
+                        <div className="flex items-center justify-between mb-5 sm:mb-6">
+                            <h3 className="text-lg sm:text-xl font-bold text-gray-800">Recent Uploads</h3>
+                            <Link to="/mynotes" className="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">View All</Link>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            {stats.recentuploads.map((file) => (
+                                <div
+                                    key={file._id}
+                                    className="group flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer"
+                                >
+                                    <div className="flex items-center gap-3 sm:gap-4 overflow-hidden">
 
-                                            <div className="flex flex-col truncate">
-                                                <span className="text-[14px] sm:text-[15px] font-bold text-gray-800 truncate">
-                                                    {file.fileName}
-                                                </span>
-
-                                                <span className="text-[10px] sm:text-xs text-gray-500 font-medium">
-                                                    PDF Document
-                                                </span>
-                                            </div>
-
+                                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
+                                            <svg
+                                                className="w-4 h-4 sm:w-5 sm:h-5"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
                                         </div>
 
-                                        <div className="text-[10px] sm:text-xs text-gray-400 font-medium shrink-0 ml-2 sm:ml-4">
-                                            {new Date(file.createdAt).toLocaleDateString()}
+                                        <div className="flex flex-col truncate">
+                                            <span className="text-[14px] sm:text-[15px] font-bold text-gray-800 truncate">
+                                                {file.fileName}
+                                            </span>
+
+                                            <span className="text-[10px] sm:text-xs text-gray-500 font-medium">
+                                                PDF Document
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="text-[10px] sm:text-xs text-gray-400 font-medium shrink-0 ml-2 sm:ml-4">
+                                        {new Date(file.createdAt).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Recent Quizzes */}
+                    <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2rem] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-xl font-bold text-gray-800">Recent Quizzes</h3>
+                            <Link to="/upload" className="text-sm font-semibold text-purple-600 hover:text-purple-500 transition-colors">Take New</Link>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            {stats.recentQuizzes.map((quiz) => (
+                                <div key={quiz._id} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer">
+                                    <div className="flex items-center gap-4 overflow-hidden">
+                                        <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                        </div>
+                                        <div className="flex flex-col truncate">
+                                            <span className="text-[15px] font-bold text-gray-800 truncate">{quiz.fileName}</span>
+                                            <span className="text-xs text-gray-500 font-medium">
+                                                {new Date(quiz.createdAt).toLocaleDateString()}
+                                            </span>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Recent Quizzes */}
-                        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2rem] p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col">
-                            <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-xl font-bold text-gray-800">Recent Quizzes</h3>
-                                <Link to="/quiz" className="text-sm font-semibold text-purple-600 hover:text-purple-500 transition-colors">Take New</Link>
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                {stats.recentQuizzes.map((quiz) => (
-                                    <div key={quiz._id} className="group flex items-center justify-between p-4 rounded-2xl hover:bg-white/80 transition-all border border-transparent hover:border-gray-100 cursor-pointer">
-                                        <div className="flex items-center gap-4 overflow-hidden">
-                                            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
-                                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                            </div>
-                                            <div className="flex flex-col truncate">
-                                                <span className="text-[15px] font-bold text-gray-800 truncate">{quiz.fileName}</span>
-                                                <span className="text-xs text-gray-500 font-medium">
-                                                    {new Date(quiz.createdAt).toLocaleDateString()}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="px-3 py-1 bg-purple-50 text-purple-600 font-bold text-sm rounded-lg shrink-0 ml-4">
-                                            Quiz
-                                        </div>
+                                    <div className="px-3 py-1 bg-purple-50 text-purple-600 font-bold text-sm rounded-lg shrink-0 ml-4">
+                                        Quiz
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
+                    </div>
 
                 </div>
             </div>

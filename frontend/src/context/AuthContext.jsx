@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
                 `${API_BASE_URL}/auth/me`,
                 {
                     withCredentials: true,
-                    timeout: 15000,
+                    timeout: 35000,
                 }
             );
 
@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
 
             return response.data.user;
         } catch (error) {
-            console.error("Auth check failed:", error.message);
             setUser(null);
             return null;
         }

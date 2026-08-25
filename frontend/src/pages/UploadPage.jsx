@@ -52,13 +52,13 @@ const UploadPage = () => {
             <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col justify-center">
                 <div className="mb-4 md:mb-6 text-center shrink-0">
                     <h1 className="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">Upload Document</h1>
-                    <p className="text-[13px] sm:text-[15px] text-gray-500 mt-2 max-w-lg mx-auto font-medium px-4">Upload your study material in PDF format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
+                    <p className="text-[13px] sm:text-[15px] text-gray-500 mt-2 max-w-lg mx-auto font-medium px-4">Upload your study material in PDF or DOCX format. Our AI will analyze the content and generate summaries, quiz questions, and flashcards instantly.</p>
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center max-w-2xl mx-auto w-full">
                     {/* The actual upload zone */}
                     <input
-                        type='file' id='fileUpload' accept='.pdf' className='hidden'
+                        type='file' id='fileUpload' accept='.pdf,.docx' className='hidden'
                         onChange={(e) => setFile(e.target.files[0])}
                     />
                     <label
@@ -73,7 +73,7 @@ const UploadPage = () => {
                         </div>
                         <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 z-10">Click to select a file</h3>
                         <p className="text-[13px] sm:text-[14px] text-gray-500 z-10">or drag and drop it here</p>
-                        <p className="text-[10px] sm:text-[11px] text-gray-400 mt-2 uppercase tracking-wider font-semibold z-10">PDF formats only</p>
+                        <p className="text-[10px] sm:text-[11px] text-gray-400 mt-2 uppercase tracking-wider font-semibold z-10">PDF and DOCX formats</p>
 
                         {file && (
                             <div className="mt-4 flex items-center gap-3 bg-white border border-gray-100 shadow-sm rounded-xl px-4 py-2.5 transition-opacity z-10">

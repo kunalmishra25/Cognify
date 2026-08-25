@@ -1,14 +1,14 @@
 const summaryModel = require('../models/summary.model')
 const pdfParse = require('pdf-parse');
 const { getSummary } = require('../services/Groq');
+const { extractText } = require("../services/fileExtractor");
 /**
  * Controller to handle PDF upload, extract text, generate summary, and respond.
  */
 async function generateSummary(req, res) {
     try {
         // Parse PDF buffer
-        const data = await pdfParse(req.file.buffer);
-        const text = data.text;
+        const text = await extractText(req.file);
         // Get summary from Groq service
         const summary = await getSummary(text);
         await summaryModel.create({
@@ -20,7 +20,7 @@ async function generateSummary(req, res) {
         res.status(201).json({ summary });
     } catch (error) {
         console.error('Error generating summary:', error);
-        res.status(500).json({ message: 'Error processing PDF' });
+        res.status(500).json({ message: 'Error processing File' });
     }
 }
 

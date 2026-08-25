@@ -23,7 +23,7 @@ async function generatequiz(req, res) {
 
         // generate quiz from saved summary
         const quizResponse = await generateQuizFromGroq(summary.summary);
-        const quiz = JSON.parse(quizResponse);
+        const quiz = JSON.parse(quizResponse).questions;
 
         const savedQuiz = await quizModel.create({
             userId: req.user._id,

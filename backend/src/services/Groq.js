@@ -88,34 +88,43 @@ async function generateQuiz(text) {
     try {
         const response = await groq.chat.completions.create({
             model: "openai/gpt-oss-20b",
+
             messages: [
                 {
                     role: "system",
                     content: `
 You are an AI study assistant.
 
-Create exactly 10 multiple-choice questions from the provided study material.
+Generate exactly 10 multiple-choice questions based ONLY on the study material provided by the user.
 
-Return ONLY valid JSON.
+Return a JSON object with this exact structure:
 
-The JSON must contain a "questions" array.
-
-Each question must have:
-- question
-- options
-- correctAnswer
+{
+  "questions": [
+    {
+      "question": "Question text",
+      "options": [
+        "Option 1",
+        "Option 2",
+        "Option 3",
+        "Option 4"
+      ],
+      "correctAnswer": "Option 1"
+    }
+  ]
+}
 
 Rules:
-- Exactly 10 questions.
-- Exactly 4 options per question.
-- Only one option is correct.
-- correctAnswer must exactly match one of the options.
+- Return exactly 10 questions.
+- Each question must have exactly 4 options.
+- Each question must have exactly one correct answer.
+- correctAnswer must exactly match one of the four options.
 - Questions must be based only on the provided study material.
 - Keep questions clear and suitable for students.
-- No Markdown.
-- No code fences.
-- No explanations.
-- No text outside the JSON.
+- Return JSON only.
+- Do not use Markdown.
+- Do not use code fences.
+- Do not include explanations outside the JSON.
                     `
                 },
                 {
@@ -123,13 +132,17 @@ Rules:
                     content: text
                 }
             ],
+
             response_format: {
                 type: "json_object"
             },
+
             temperature: 0.2
         });
 
-        return response.choices[0].message.content;
+        const content = response.choices[0].message.content;
+
+        return content;
 
     } catch (error) {
         console.error("Groq Quiz Error:", error);

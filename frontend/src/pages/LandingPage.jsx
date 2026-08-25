@@ -74,7 +74,7 @@ const LandingPage = () => {
                     </h1>
 
                     <p className="text-[16px] sm:text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed px-2">
-                        Simplify your study routine. Upload your notes, slides, or documents, and let our AI instantly
+                        Simplify your study routine. Upload your notes or documents, and let our AI instantly
                         generate structured flashcards, summaries, and quizzes seamlessly.
                     </p>
 
@@ -115,7 +115,7 @@ const LandingPage = () => {
                         {/* Central AI Circle */}
                         <div className="relative z-10 w-28 h-28 md:w-40 md:h-40 rounded-full bg-white border-[6px] border-blue-50 shadow-[0_0_50px_rgba(107,130,246,0.15)] flex items-center justify-center">
                             <span className="text-3xl md:text-5xl font-black text-[#6B82F6] tracking-tighter">AI</span>
-                            
+
                             {/* Orbit Rings */}
                             <div className="absolute inset-[-15px] md:inset-[-20px] rounded-full border-2 border-dashed border-blue-100/60"></div>
                             <div className="absolute inset-[-35px] md:inset-[-45px] rounded-full border border-dashed border-blue-50/40"></div>
@@ -178,7 +178,7 @@ const LandingPage = () => {
                             </div>
                             <h3 className="text-lg font-bold text-gray-900 mb-3">Smart Uploads</h3>
                             <p className="text-gray-500 text-sm leading-relaxed">
-                                Instantly process PDFs and text files to securely compile your knowledge base.
+                                Instantly process PDFs and docx files to securely compile your knowledge base.
                             </p>
                         </div>
 

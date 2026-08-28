@@ -9,17 +9,18 @@ const FlashcardsPage = () => {
 
     const [flashcards, setFlashcards] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    // Active deck & study state
     const [currentCard, setCurrentCard] = useState(0);
-    const [showAnswer, setShowAnswer] = useState(false);
+    const [isFlipped, setIsFlipped] = useState(false);
+    const [deckCompleted, setDeckCompleted] = useState(false);
 
     useEffect(() => {
         const getFlashcards = async () => {
             try {
                 const response = await axios.get(
                     `${API_BASE_URL}/flashcards/${id}`,
-                    {
-                        withCredentials: true
-                    }
+                    { withCredentials: true }
                 );
                 setFlashcards(response.data.data);
             } catch (error) {
@@ -31,31 +32,42 @@ const FlashcardsPage = () => {
         getFlashcards();
     }, [id]);
 
-    // Keyboard Shortcuts for Navigation and Answer Toggle
+    // Restart full deck
+    const handleRestartDeck = () => {
+        setCurrentCard(0);
+        setIsFlipped(false);
+        setDeckCompleted(false);
+    };
+
+    // Keyboard Shortcuts for Navigation and Card Flip
     useEffect(() => {
         const handleKeyDown = (e) => {
-            // Avoid handling keys if user is typing in an input
             if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+            if (deckCompleted || !flashcards || !flashcards.flashcards) return;
+
+            const totalCards = flashcards.flashcards.length;
 
             if (e.code === 'Space' || e.code === 'Enter') {
                 e.preventDefault();
-                setShowAnswer(prev => !prev);
+                setIsFlipped(prev => !prev);
             } else if (e.code === 'ArrowRight') {
-                if (flashcards && currentCard < flashcards.flashcards.length - 1) {
+                if (currentCard < totalCards - 1) {
                     setCurrentCard(prev => prev + 1);
-                    setShowAnswer(false);
+                    setIsFlipped(false);
+                } else if (currentCard === totalCards - 1) {
+                    setDeckCompleted(true);
                 }
             } else if (e.code === 'ArrowLeft') {
                 if (currentCard > 0) {
                     setCurrentCard(prev => prev - 1);
-                    setShowAnswer(false);
+                    setIsFlipped(false);
                 }
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [flashcards, currentCard]);
+    }, [flashcards, currentCard, deckCompleted]);
 
     if (loading) {
         return (
@@ -104,11 +116,76 @@ const FlashcardsPage = () => {
     const progressPercent = Math.round(((currentCard + 1) / totalCards) * 100);
     const cardData = flashcards.flashcards[currentCard];
 
+    // =====================================
+    // DECK COMPLETION SUMMARY VIEW
+    // =====================================
+    if (deckCompleted) {
+        return (
+            <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-8 md:pt-16 pb-20">
+                <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col items-center">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="inline-flex items-center gap-2 text-[14px] font-semibold text-gray-500 hover:text-[#6B82F6] transition-colors mb-6 cursor-pointer self-start group"
+                    >
+                        <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Study Hub
+                    </button>
+
+                    <div className="w-full max-w-2xl">
+                        {/* Summary Header */}
+                        <div className="text-center mb-8">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/60 text-amber-700 text-[12px] font-bold uppercase tracking-wider mb-3">
+                                <span>🃏</span> Deck Complete
+                            </div>
+                            <h1 className="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 tracking-tight pb-1">
+                                {flashcards.fileName || "Study Deck"}
+                            </h1>
+                        </div>
+
+                        {/* Summary Card */}
+                        <div className="bg-white/70 backdrop-blur-xl border border-white/80 p-8 sm:p-12 rounded-[2rem] sm:rounded-[2.5rem] w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center relative overflow-hidden">
+                            <div className="w-20 h-20 bg-gradient-to-br from-amber-50 to-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-white text-4xl shadow-inner">
+                                👏
+                            </div>
+                            
+                            <h3 className="text-2xl font-extrabold text-gray-800 mb-2">Great job reviewing!</h3>
+                            <p className="text-gray-500 text-sm sm:text-base mb-8">You've gone through all {totalCards} flashcards in this deck.</p>
+
+                            {/* Action Buttons */}
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                                <button
+                                    onClick={handleRestartDeck}
+                                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-semibold text-sm transition-all duration-200 shadow-[0_4px_14px_rgba(245,158,11,0.35)] w-full sm:w-auto justify-center cursor-pointer"
+                                >
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    Restart Deck
+                                </button>
+                                <button
+                                    onClick={() => navigate(-1)}
+                                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-white/80 border border-gray-200 text-gray-700 font-semibold text-sm hover:bg-white hover:border-gray-300 transition-all duration-200 shadow-sm w-full sm:w-auto justify-center cursor-pointer"
+                                >
+                                    Back to Study Hub
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // =====================================
+    // MAIN FLASHCARD STUDY VIEW
+    // =====================================
     return (
         <div className="h-full min-h-screen w-full bg-transparent flex flex-col pt-8 md:pt-16 pb-20">
             <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 flex-1 flex flex-col items-center">
 
-                {/* Navigation Back Link */}
+                {/* Back Button */}
                 <button
                     onClick={() => navigate(-1)}
                     className="inline-flex items-center gap-2 text-[14px] font-semibold text-gray-500 hover:text-[#6B82F6] transition-colors mb-6 cursor-pointer self-start group"
@@ -129,12 +206,15 @@ const FlashcardsPage = () => {
                     </h1>
                 </div>
 
-                {/* Progress Bar & Counter Tag */}
-                <div className="w-full max-w-2xl mb-8">
+                {/* Progress Bar & Counter */}
+                <div className="w-full max-w-2xl mb-6">
                     <div className="flex justify-between items-center mb-2 px-1 text-xs sm:text-sm font-semibold text-gray-500">
                         <span>Progress</span>
-                        <span className="text-amber-600 font-bold">Card {currentCard + 1} of {totalCards}</span>
+                        <span className="text-amber-600 font-bold">
+                            Card {currentCard + 1} of {totalCards}
+                        </span>
                     </div>
+
                     <div className="w-full bg-gray-200/80 rounded-full h-2.5 overflow-hidden border border-white/60 shadow-inner">
                         <div
                             className="bg-gradient-to-r from-amber-500 to-indigo-600 h-full transition-all duration-300 ease-out rounded-full"
@@ -143,69 +223,89 @@ const FlashcardsPage = () => {
                     </div>
                 </div>
 
-                {/* Main Flashcard Container */}
+                {/* Clean 3D Interactive Flashcard */}
                 <div className="w-full max-w-2xl flex flex-col items-center">
-                    <div className="bg-white/70 backdrop-blur-xl border border-white/80 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden flex flex-col justify-between min-h-[300px] sm:min-h-[340px] transition-all duration-300">
-                        
-                        {/* Decorative background blur shape */}
-                        <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-amber-100/50 to-indigo-100/30 rounded-bl-[100px] -z-10 opacity-70"></div>
+                    <div 
+                        className="w-full perspective-1000 my-2 cursor-pointer select-none group"
+                        onClick={() => setIsFlipped(!isFlipped)}
+                    >
+                        {/* 3D Flipping Card Container */}
+                        <div className={`w-full min-h-[320px] sm:min-h-[360px] transition-transform duration-500 transform-style-3d relative ${isFlipped ? 'rotate-y-180' : ''}`}>
 
-                        {/* Top Card Badge */}
-                        <div className="flex items-center justify-between mb-6">
-                            <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-lg bg-amber-50 text-amber-600 border border-amber-100">
-                                Question {currentCard + 1}
-                            </span>
-                            <span className="text-xs text-gray-400 font-medium">
-                                {showAnswer ? "Answer Revealed" : "Click below to reveal answer"}
-                            </span>
-                        </div>
+                            {/* FRONT SIDE: QUESTION */}
+                            <div className="absolute inset-0 w-full h-full backface-hidden bg-white/70 backdrop-blur-xl border border-white/80 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between overflow-hidden">
+                                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-amber-100/50 to-indigo-100/30 rounded-bl-[100px] -z-10 opacity-70"></div>
 
-                        {/* Question Section */}
-                        <div className="my-auto py-2">
-                            <h2 className="text-lg sm:text-2xl font-bold text-gray-800 leading-relaxed text-center tracking-tight">
-                                {cardData.question}
-                            </h2>
-
-                            {/* Answer Section with Smooth Transition */}
-                            {showAnswer && (
-                                <div className="mt-6 p-5 sm:p-6 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-gray-800 transition-all duration-300">
-                                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-amber-700 mb-2">
-                                        Answer
-                                    </div>
-                                    <p className="text-base sm:text-lg font-medium leading-relaxed text-gray-800">
-                                        {cardData.answer}
-                                    </p>
+                                {/* Question Header */}
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-lg bg-amber-50 text-amber-600 border border-amber-100">
+                                        Question {currentCard + 1}
+                                    </span>
+                                    <span className="text-[12px] text-gray-400 font-medium group-hover:text-amber-600 transition-colors">
+                                        Click or press Space to flip
+                                    </span>
                                 </div>
-                            )}
-                        </div>
 
-                        {/* Show / Hide Answer Action Button */}
-                        <div className="mt-8 pt-4 border-t border-gray-100 flex justify-center">
-                            <button
-                                onClick={() => setShowAnswer(!showAnswer)}
-                                className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer ${
-                                    showAnswer 
-                                        ? "bg-amber-100 text-amber-800 hover:bg-amber-200/80 shadow-sm" 
-                                        : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-[0_4px_16px_rgba(99,102,241,0.3)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.45)] hover:-translate-y-0.5"
-                                }`}
-                            >
-                                {showAnswer ? (
-                                    <>
-                                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.05 10.05 0 013.682-.763c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21M3 3l18 18" />
-                                        </svg>
-                                        Hide Answer
-                                    </>
-                                ) : (
-                                    <>
+                                {/* Question Content */}
+                                <div className="my-auto py-6 text-center">
+                                    <h2 className="text-xl sm:text-2xl font-extrabold text-gray-800 leading-relaxed tracking-tight">
+                                        {cardData.question}
+                                    </h2>
+                                </div>
+
+                                {/* Reveal Answer Action Button */}
+                                <div className="pt-4 border-t border-gray-100/80 flex justify-center">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsFlipped(true);
+                                        }}
+                                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-[0_4px_16px_rgba(245,158,11,0.3)] transition-all duration-200 cursor-pointer"
+                                    >
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
-                                        Show Answer
-                                    </>
-                                )}
-                            </button>
+                                        Reveal Answer
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* BACK SIDE: ANSWER */}
+                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-white/85 backdrop-blur-xl border border-amber-200/70 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between overflow-hidden">
+                                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-indigo-100/60 to-purple-100/30 rounded-bl-[100px] -z-10 opacity-70"></div>
+
+                                {/* Answer Header */}
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
+                                        Answer
+                                    </span>
+                                    <span className="text-[12px] text-gray-400 font-medium">
+                                        Click card to flip back
+                                    </span>
+                                </div>
+
+                                {/* Answer Text */}
+                                <div className="my-auto py-6 text-center">
+                                    <p className="text-base sm:text-xl font-medium leading-relaxed text-gray-800">
+                                        {cardData.answer}
+                                    </p>
+                                </div>
+
+                                {/* Hide Answer Action Button */}
+                                <div className="pt-4 border-t border-gray-100/80 flex justify-center">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsFlipped(false);
+                                        }}
+                                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-100/80 text-amber-800 font-bold text-xs sm:text-sm hover:bg-amber-200/80 transition-all duration-200 cursor-pointer"
+                                    >
+                                        Hide Answer
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -215,7 +315,7 @@ const FlashcardsPage = () => {
                             disabled={currentCard === 0}
                             onClick={() => {
                                 setCurrentCard(currentCard - 1);
-                                setShowAnswer(false);
+                                setIsFlipped(false);
                             }}
                             className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white/80 border border-gray-200 text-gray-700 font-semibold text-sm hover:bg-white hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-sm cursor-pointer"
                         >
@@ -225,36 +325,24 @@ const FlashcardsPage = () => {
                             Previous
                         </button>
 
-                        {/* Reset / Restart Deck if on last card */}
-                        {currentCard === totalCards - 1 ? (
-                            <button
-                                onClick={() => {
-                                    setCurrentCard(0);
-                                    setShowAnswer(false);
-                                }}
-                                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm transition-all duration-200 shadow-[0_4px_14px_rgba(245,158,11,0.35)] cursor-pointer"
-                            >
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                                </svg>
-                                Restart Deck
-                            </button>
-                        ) : (
-                            <button
-                                disabled={currentCard === totalCards - 1}
-                                onClick={() => {
+                        <button
+                            onClick={() => {
+                                if (currentCard < totalCards - 1) {
                                     setCurrentCard(currentCard + 1);
-                                    setShowAnswer(false);
-                                }}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-[0_4px_14px_rgba(99,102,241,0.3)] hover:shadow-[0_6px_18px_rgba(99,102,241,0.45)] cursor-pointer"
-                            >
-                                Next
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        )}
+                                    setIsFlipped(false);
+                                } else {
+                                    setDeckCompleted(true);
+                                }
+                            }}
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-semibold text-sm transition-all duration-200 shadow-[0_4px_14px_rgba(245,158,11,0.35)] cursor-pointer"
+                        >
+                            {currentCard === totalCards - 1 ? "Finish Deck" : "Next"}
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>

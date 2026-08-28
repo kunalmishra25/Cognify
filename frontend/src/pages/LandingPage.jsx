@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../components/Logo';
 import { useAuth } from '../context/AuthContext';
 
+
 const LandingPage = () => {
     const { user, loading } = useAuth();
     const navigate = useNavigate();

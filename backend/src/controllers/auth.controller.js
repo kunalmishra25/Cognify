@@ -121,4 +121,37 @@ async function getMe(req, res) {
     })
 }
 
-module.exports = { register, login, logout, getMe }
+async function updateprofile(req, res) {
+    try {
+        const { fullname } = req.body;
+        if (!fullname || !fullname.trim()) {
+            return res.status(400).json({
+                message: "Full name is required"
+            })
+        }
+        const user = await userModel.findByIdAndUpdate(
+            req.user._id,
+            { fullname: fullname.trim() },
+            {
+                returnDocument: 'after',
+                runValidators: true
+            }
+        );
+        res.status(200).json({
+            message: "Profile Updated",
+            user: {
+                id: user._id,
+                email: user.email,
+                fullname: user.fullname
+            }
+        })
+
+    } catch (error) {
+        console.error("Profile update error:", error);
+        res.status(500).json({
+            message: "Failed to update profile"
+        });
+    }
+}
+
+module.exports = { register, login, logout, getMe, updateprofile }

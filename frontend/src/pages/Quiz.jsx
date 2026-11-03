@@ -12,6 +12,8 @@ const Quiz = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [quizCompleted, setQuizCompleted] = useState(false);
+    const [answers, setAnswers] = useState([]);
+    const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
         const getQuiz = async () => {
@@ -144,6 +146,7 @@ const Quiz = () => {
                                         setCurrentQuestion(0);
                                         setSelectedAnswer(null);
                                         setScore(0);
+                                        setAnswers([]);
                                         setQuizCompleted(false);
                                     }}
                                     className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 text-white font-semibold text-sm transition-all duration-200 shadow-[0_4px_14px_rgba(168,85,247,0.35)] w-full sm:w-auto justify-center"
@@ -171,19 +174,50 @@ const Quiz = () => {
     const totalQuestions = quiz.quiz.length;
     const progressPercent = Math.round(((currentQuestion + 1) / totalQuestions) * 100);
 
-    const handleNext = () => {
+
+    const handleNext = async () => {
+        const updatedAnswers = [...answers];
+        updatedAnswers[currentQuestion] = selectedAnswer;
+
         const isCorrect = selectedAnswer === currentQuizQuestion.correctAnswer;
         const updatedScore = isCorrect ? score + 1 : score;
 
         if (currentQuestion < totalQuestions - 1) {
-            if (isCorrect) setScore(prev => prev + 1);
+            setAnswers(updatedAnswers);
+
+            if (isCorrect) {
+                setScore(prev => prev + 1);
+            }
             setCurrentQuestion(prev => prev + 1);
             setSelectedAnswer(null);
         } else {
-            setScore(updatedScore);
-            setQuizCompleted(true);
+            try {
+                setIsSaving(true);
+                const response = await axios.post(
+                    `${API_BASE_URL}/quiz/attempt`,
+                    {
+                        quizId: id,
+                        answers: updatedAnswers
+                    },
+                    { withCredentials: true }
+                );
+                if (response.data.success) {
+                    setAnswers(updatedAnswers);
+                    setScore(updatedScore);
+                    setQuizCompleted(true);
+                }
+            } catch (error) {
+                console.error("Error saving quiz result:", error);
+                alert(
+                    error.response?.data?.message ||
+                    "Failed to save quiz result. Please try again."
+                );
+            } finally {
+                setIsSaving(false);
+            }
         }
     };
+
 
     const optionLabels = ["A", "B", "C", "D"];
 
@@ -229,7 +263,7 @@ const Quiz = () => {
                 {/* Main Quiz Card */}
                 <div className="w-full max-w-2xl flex flex-col">
                     <div className="bg-white/70 backdrop-blur-xl border border-white/80 p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] w-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden mb-4">
-                        
+
                         {/* Decorative shape */}
                         <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-purple-100/50 to-indigo-100/30 rounded-bl-[100px] -z-10 opacity-70"></div>
 
@@ -256,17 +290,15 @@ const Quiz = () => {
                                     <button
                                         key={index}
                                         onClick={() => setSelectedAnswer(option)}
-                                        className={`w-full flex items-center gap-4 p-4 sm:p-4.5 text-left rounded-2xl border font-medium text-sm sm:text-base transition-all duration-200 cursor-pointer ${
-                                            isSelected
-                                                ? "border-purple-400 bg-purple-50/80 text-purple-900 shadow-[0_2px_12px_rgba(168,85,247,0.15)]"
-                                                : "border-gray-200/80 bg-white/60 hover:bg-white/90 hover:border-gray-300 text-gray-700"
-                                        }`}
+                                        className={`w-full flex items-center gap-4 p-4 sm:p-4.5 text-left rounded-2xl border font-medium text-sm sm:text-base transition-all duration-200 cursor-pointer ${isSelected
+                                            ? "border-purple-400 bg-purple-50/80 text-purple-900 shadow-[0_2px_12px_rgba(168,85,247,0.15)]"
+                                            : "border-gray-200/80 bg-white/60 hover:bg-white/90 hover:border-gray-300 text-gray-700"
+                                            }`}
                                     >
-                                        <span className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold border transition-all duration-200 ${
-                                            isSelected
-                                                ? "bg-purple-600 border-purple-600 text-white"
-                                                : "bg-gray-100 border-gray-200 text-gray-500"
-                                        }`}>
+                                        <span className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold border transition-all duration-200 ${isSelected
+                                            ? "bg-purple-600 border-purple-600 text-white"
+                                            : "bg-gray-100 border-gray-200 text-gray-500"
+                                            }`}>
                                             {optionLabels[index]}
                                         </span>
                                         <span className="leading-snug">{option}</span>
@@ -277,18 +309,26 @@ const Quiz = () => {
                     </div>
 
                     {/* Next / Finish Button */}
+
                     <div className="flex justify-end">
                         <button
-                            disabled={!selectedAnswer}
+                            disabled={!selectedAnswer || isSaving}
                             onClick={handleNext}
                             className="inline-flex items-center gap-2 px-7 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-[0_4px_14px_rgba(168,85,247,0.3)] hover:shadow-[0_6px_18px_rgba(168,85,247,0.45)] cursor-pointer"
                         >
-                            {currentQuestion === totalQuestions - 1 ? "Finish Quiz" : "Next"}
+                            {isSaving
+                                ? "Saving Result..."
+                                : currentQuestion === totalQuestions - 1
+                                    ? "Finish Quiz"
+                                    : "Next"
+                            }
+
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>

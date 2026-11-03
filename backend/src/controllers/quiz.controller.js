@@ -196,16 +196,19 @@ async function saveQuizAttempt(req, res) {
             })
         }
 
+
         //calculate score
 
         let score = 0;
-        quiz.auiz.forEach((questions, index) => {
-            if (answers[index] === questions.correctAnswers) {
+        quiz.quiz.forEach((question, index) => {
+            const isCorrect = answers[index] === question.correctAnswer;
+            if (isCorrect) {
                 score++;
             }
         });
 
         const totalQuestions = quiz.quiz.length;
+
         const percentage = Math.round(
             (score / totalQuestions) * 100
         );

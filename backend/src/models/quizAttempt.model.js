@@ -17,7 +17,7 @@ const quizAttemptSchema = new mongoose.Schema(
             require: true,
         },
         totalQuestions: {
-            type: number,
+            type: Number,
             require: true,
         },
         percentage: {

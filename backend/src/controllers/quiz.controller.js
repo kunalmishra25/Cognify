@@ -1,10 +1,10 @@
 const { generateQuiz: generateQuizFromGroq } = require('../services/Groq')
 const quizModel = require('../models/quiz.model')
+const quizAttemptModel = require('../models/quizAttempt.model');
 const summaryModel = require('../models/summary.model')
 
 async function generatequiz(req, res) {
     try {
-
         const { summaryId } = req.body;
         const summary = await summaryModel.findById(summaryId);
         if (!summary) {
@@ -13,7 +13,6 @@ async function generatequiz(req, res) {
                 message: "Summary not found"
             })
         }
-
         if (summary.userId.toString() !== req.user._id.toString()) {
             return res.status(403).json({
                 success: false,
@@ -160,4 +159,79 @@ async function deletequiz(req, res) {
     }
 }
 
-module.exports = { generatequiz, getquizbysummaryId, getquizbyid, getquizzes, deletequiz }
+async function saveQuizAttempt(req, res) {
+    try {
+        const { quizId, answers } = req.body;
+        // validate req data
+
+        if (!quizId || !Array.isArray(answers)) {
+            return req.status(400).json({
+                success: false,
+                message: "Quiz id and answers are required"
+            })
+        }
+
+        const quiz = await quizModel.findById(quizId);
+        if (!quiz) {
+            return res.status(404), json({
+                success: false,
+                message: "Quiz not found",
+            })
+        }
+
+        // quiz ownership
+        if (quiz.userId.toString() !== req.user._id.toString()) {
+            return res.status(403).json({
+                success: false,
+                message: "Access denied"
+            });
+
+        }
+        // Ensure all questions have been answered
+
+        if (answers.length !== quiz.quiz.length) {
+            return res.status(400).json({
+                success: false,
+                message: "Please answer all questions"
+            })
+        }
+
+        //calculate score
+
+        let score = 0;
+        quiz.auiz.forEach((questions, index) => {
+            if (answers[index] === questions.correctAnswers) {
+                score++;
+            }
+        });
+
+        const totalQuestions = quiz.quiz.length;
+        const percentage = Math.round(
+            (score / totalQuestions) * 100
+        );
+
+        // store in db
+        const savedAttempt = await quizAttemptModel.create({
+            userId: req.user_id,
+            quizId: quiz._id,
+            score,
+            totalQuestions, percentage
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Quiz result saved successfully",
+            data: savedAttempt
+        });
+
+    } catch (error) {
+        console.error("Error saving quiz", error);
+
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+module.exports = { generatequiz, getquizbysummaryId, getquizbyid, getquizzes, deletequiz, saveQuizAttempt }

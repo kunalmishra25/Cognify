@@ -165,7 +165,7 @@ async function saveQuizAttempt(req, res) {
         // validate req data
 
         if (!quizId || !Array.isArray(answers)) {
-            return req.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Quiz id and answers are required"
             })
@@ -173,7 +173,7 @@ async function saveQuizAttempt(req, res) {
 
         const quiz = await quizModel.findById(quizId);
         if (!quiz) {
-            return res.status(404), json({
+            return res.status(404).json({
                 success: false,
                 message: "Quiz not found",
             })
@@ -215,7 +215,7 @@ async function saveQuizAttempt(req, res) {
 
         // store in db
         const savedAttempt = await quizAttemptModel.create({
-            userId: req.user_id,
+            userId: req.user._id,
             quizId: quiz._id,
             score,
             totalQuestions, percentage
@@ -237,4 +237,23 @@ async function saveQuizAttempt(req, res) {
     }
 }
 
-module.exports = { generatequiz, getquizbysummaryId, getquizbyid, getquizzes, deletequiz, saveQuizAttempt }
+async function getQuizAttempts(req, res) {
+    try {
+        const attempts = await quizAttemptModel.find(
+            { user: req.user._id }).populate("quizId", "fileName").sort({ createdAt: -1 });
+
+        return res.status(200).json({
+            success: true,
+            count: attempts.length,
+            data: attempts
+        })
+    } catch (error) {
+        console.error("Error fetching quiz attempts:", error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
+module.exports = { generatequiz, getquizbysummaryId, getquizbyid, getquizzes, deletequiz, saveQuizAttempt, getQuizAttempts }

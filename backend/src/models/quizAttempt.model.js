@@ -9,7 +9,7 @@ const quizAttemptSchema = new mongoose.Schema(
         },
         quizId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'quiz',
+            ref: 'Quiz',
             require: true,
         },
         score: {

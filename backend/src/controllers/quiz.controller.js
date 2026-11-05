@@ -213,13 +213,12 @@ async function saveQuizAttempt(req, res) {
             (score / totalQuestions) * 100
         );
 
-        // store in db
-        const savedAttempt = await quizAttemptModel.create({
-            userId: req.user._id,
-            quizId: quiz._id,
-            score,
-            totalQuestions, percentage
-        });
+        // store in db — upsert so retakes overwrite the previous attempt
+        const savedAttempt = await quizAttemptModel.findOneAndUpdate(
+            { userId: req.user._id, quizId: quiz._id },
+            { score, totalQuestions, percentage },
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
 
         return res.status(201).json({
             success: true,
@@ -240,7 +239,7 @@ async function saveQuizAttempt(req, res) {
 async function getQuizAttempts(req, res) {
     try {
         const attempts = await quizAttemptModel.find(
-            { user: req.user._id }).populate("quizId", "fileName").sort({ createdAt: -1 });
+            { userId: req.user._id }).populate("quizId", "fileName").sort({ createdAt: -1 });
 
         return res.status(200).json({
             success: true,

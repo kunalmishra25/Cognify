@@ -15,6 +15,7 @@ import StudyOptions from './pages/StudyOptions'
 import FlashcardDecks from './pages/FlashcardDecks'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
+import QuizResults from './pages/QuizResults'
 
 const App = () => {
     const location = useLocation();
@@ -34,6 +35,7 @@ const App = () => {
                         <Route path="/upload" element={<UploadPage />} />
                         <Route path="/summary" element={<SummaryPage />} />
                         <Route path="/quiz/:id" element={<Quiz />} />
+                        <Route path="/quiz-results" element={<QuizResults />} />
                         <Route path="/flashcards" element={<FlashcardDecks />} />
                         <Route path="/flashcards/:id" element={<FlashcardsPage />} />
                         <Route path="/mynotes" element={<MyNotes />} />

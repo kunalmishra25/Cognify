@@ -150,8 +150,54 @@ Rules:
     }
 }
 
+async function chatWithStudyMaterial(studyMaterial, chatHistory, question) {
+
+    try {
+        const response = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
+            messages: [
+                {
+                    role: "system",
+                    content:
+                        `You are Cognify AI, an intelligent study assistant.
+
+Answer the user's questions using the provided study material.
+
+Rules:
+- Explain concepts in simple, student-friendly language.
+- Use examples whenever helpful.
+- Use Markdown formatting when appropriate.
+- Keep answers clear and well structured.
+- Use conversation history to understand follow-up questions.
+- Do not invent facts that are not supported by the study material.
+- If the answer is not available in the study material,
+  clearly tell the user.
+- Stay focused on education and learning.`
+                },
+                {
+                    role: "user",
+                    content: `Study Material: ${studyMaterial}`
+
+                },
+                ...chatHistory,
+                {
+                    role: "user",
+                    content: question
+                }
+            ],
+            temperature: 0.3
+        });
+        return response.choices[0].message.content;
+
+    } catch (error) {
+        console.error("Groq Chat Error:", error);
+        throw error;
+    }
+}
+
 module.exports = {
     getSummary,
     generateFlashcards,
-    generateQuiz
+    generateQuiz,
+    chatWithStudyMaterial
 };

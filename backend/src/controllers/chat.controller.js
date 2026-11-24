@@ -71,6 +71,7 @@ async function sendMessage(req, res) {
                 messages: []
             })
         }
+
         const chatHistory = chat.messages.slice(-10).map((msg) => ({
             role: msg.role,
             content: msg.content

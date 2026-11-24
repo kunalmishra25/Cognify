@@ -7,6 +7,7 @@ const summaryRoutes = require('./routes/summary.routes')
 const dashboardRoutes = require('./routes/dashboard.routes')
 const flashcardRoutes = require('./routes/flashcard.routes')
 const quizRoutes = require('./routes/quiz.routes');
+const chatRoutes = require('./routes/chat.routes');
 const cookieParser = require('cookie-parser')
 
 
@@ -29,6 +30,7 @@ app.use('/api/summary', summaryRoutes);
 app.use('/api/dashboard', dashboardRoutes)
 app.use('/api/flashcards', flashcardRoutes);
 app.use('/api/quiz', quizRoutes);
+app.use('/api/chat', chatRoutes);
 // app.use('/api/summaries', summaryRoutes); one is enough , the imp thing is what inside your summaryRoutes
 
 module.exports = app

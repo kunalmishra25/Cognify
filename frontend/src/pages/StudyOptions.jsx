@@ -34,6 +34,9 @@ const StudyOptions = () => {
     const handleViewSummary = () => {
         navigate(`/summary/${id}`);
     };
+    const handleAskAI = () => {
+        navigate(`/study-chat/${id}`);
+    };
 
 
     // handleFlashcards() first checks whether flashcards already exist for the selected summary. 
@@ -152,7 +155,7 @@ const StudyOptions = () => {
                         </div>
 
                         {/* Cards Grid */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mt-2">
 
                             {/* Card 1: View Summary */}
                             <div
@@ -249,6 +252,34 @@ const StudyOptions = () => {
                                     </svg>
                                 </div>
                             </div>
+
+                            {/* Card 4: Ask AI */}
+                            <div
+                                onClick={handleAskAI}
+                                className="group relative flex flex-col justify-between p-7 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 hover:bg-white/85 hover:border-emerald-400/30 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_16px_40px_rgba(16,185,129,0.12)] transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+                            >
+                                <div>
+                                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 text-emerald-600 flex items-center justify-center text-2xl mb-6 shadow-sm border border-emerald-100/60 group-hover:scale-110 transition-transform duration-300">
+                                        🤖
+                                    </div>
+
+                                    <h2 className="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition-colors mb-3">
+                                        Ask AI
+                                    </h2>
+
+                                    <p className="text-[14px] text-gray-500 leading-relaxed font-normal">
+                                        Chat with Cognify AI, ask questions, and understand concepts from your study material.
+                                    </p>
+                                </div>
+
+                                <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between text-emerald-600 font-semibold text-[14px]">
+                                    <span>Start Conversation</span>
+                                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>

@@ -16,6 +16,7 @@ import FlashcardDecks from './pages/FlashcardDecks'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
 import QuizResults from './pages/QuizResults'
+import StudyChat from './pages/StudyChat'
 
 const App = () => {
     const location = useLocation();
@@ -41,9 +42,9 @@ const App = () => {
                         <Route path="/mynotes" element={<MyNotes />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/summary/:id" element={<ViewSummary />} />
-                        <Route path="/study-options/:id" element={<StudyOptions />}
+                        <Route path="/study-options/:id" element={<StudyOptions />} />
+                        <Route path="/study-chat/:id" element={<StudyChat />} />
 
-                        />
                     </Route>
                 </Routes>
             </main>

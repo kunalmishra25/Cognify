@@ -10,7 +10,6 @@ const quizRoutes = require('./routes/quiz.routes');
 const chatRoutes = require('./routes/chat.routes');
 const cookieParser = require('cookie-parser')
 
-
 const app = express()
 
 //MIDDLEWARE

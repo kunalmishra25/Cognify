@@ -162,6 +162,7 @@ const StudyChat = () => {
                     </div>
                 )}
 
+
                 {/* Chat messages */}
                 {messages.length > 0 && (
                     <div className="space-y-5">
@@ -183,67 +184,89 @@ const StudyChat = () => {
                                         {msg.role === "user" ? "You" : "Cognify AI"}
                                     </p>
 
-                                    <div className="text-sm leading-7 break-words">
-                                        <ReactMarkdown
-                                            remarkPlugins={[remarkGfm]}
-                                            components={{
-                                                h1: ({ children }) => (
-                                                    <h1 className="text-xl font-bold mt-4 mb-2">{children}</h1>
-                                                ),
-                                                h2: ({ children }) => (
-                                                    <h2 className="text-lg font-bold mt-4 mb-2">{children}</h2>
-                                                ),
-                                                h3: ({ children }) => (
-                                                    <h3 className="font-bold mt-3 mb-2">{children}</h3>
-                                                ),
-                                                p: ({ children }) => (
-                                                    <p className="mb-3 last:mb-0">{children}</p>
-                                                ),
-                                                ul: ({ children }) => (
-                                                    <ul className="list-disc pl-6 mb-3 space-y-1">{children}</ul>
-                                                ),
-                                                ol: ({ children }) => (
-                                                    <ol className="list-decimal pl-6 mb-3 space-y-1">{children}</ol>
-                                                ),
-                                                li: ({ children }) => <li>{children}</li>,
-                                                strong: ({ children }) => (
-                                                    <strong className="font-bold">{children}</strong>
-                                                ),
-                                                code: ({ children }) => (
-                                                    <code className="bg-gray-100 text-indigo-700 px-1.5 py-0.5 rounded">
-                                                        {children}
-                                                    </code>
-                                                ),
-                                                pre: ({ children }) => (
-                                                    <pre className="bg-gray-900 text-white p-4 rounded-xl overflow-x-auto my-3">
-                                                        {children}
-                                                    </pre>
-                                                ),
-                                                blockquote: ({ children }) => (
-                                                    <blockquote className="border-l-4 border-indigo-400 pl-3 my-3 text-gray-500">
-                                                        {children}
-                                                    </blockquote>
-                                                ),
-                                                table: ({ children }) => (
-                                                    <div className="overflow-x-auto my-3">
-                                                        <table className="border-collapse w-full text-sm">
+                                    {msg.role === "assistant" ? (
+                                        <div className="text-sm leading-7 break-words">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkGfm]}
+                                                components={{
+                                                    h1: ({ children }) => (
+                                                        <h1 className="text-xl font-bold mt-4 mb-2">
                                                             {children}
-                                                        </table>
-                                                    </div>
-                                                ),
-                                                th: ({ children }) => (
-                                                    <th className="border border-gray-300 p-2 bg-gray-100 text-left">
-                                                        {children}
-                                                    </th>
-                                                ),
-                                                td: ({ children }) => (
-                                                    <td className="border border-gray-300 p-2">{children}</td>
-                                                )
-                                            }}
-                                        >
+                                                        </h1>
+                                                    ),
+                                                    h2: ({ children }) => (
+                                                        <h2 className="text-lg font-bold mt-4 mb-2">
+                                                            {children}
+                                                        </h2>
+                                                    ),
+                                                    h3: ({ children }) => (
+                                                        <h3 className="font-bold mt-3 mb-2">
+                                                            {children}
+                                                        </h3>
+                                                    ),
+                                                    p: ({ children }) => (
+                                                        <p className="mb-3 last:mb-0">
+                                                            {children}
+                                                        </p>
+                                                    ),
+                                                    ul: ({ children }) => (
+                                                        <ul className="list-disc pl-6 mb-3 space-y-1">
+                                                            {children}
+                                                        </ul>
+                                                    ),
+                                                    ol: ({ children }) => (
+                                                        <ol className="list-decimal pl-6 mb-3 space-y-1">
+                                                            {children}
+                                                        </ol>
+                                                    ),
+                                                    li: ({ children }) => <li>{children}</li>,
+                                                    strong: ({ children }) => (
+                                                        <strong className="font-bold">
+                                                            {children}
+                                                        </strong>
+                                                    ),
+                                                    code: ({ children }) => (
+                                                        <code className="bg-gray-100 text-indigo-700 px-1.5 py-0.5 rounded">
+                                                            {children}
+                                                        </code>
+                                                    ),
+                                                    pre: ({ children }) => (
+                                                        <pre className="bg-gray-900 text-white p-4 rounded-xl overflow-x-auto my-3">
+                                                            {children}
+                                                        </pre>
+                                                    ),
+                                                    blockquote: ({ children }) => (
+                                                        <blockquote className="border-l-4 border-indigo-400 pl-3 my-3 text-gray-500">
+                                                            {children}
+                                                        </blockquote>
+                                                    ),
+                                                    table: ({ children }) => (
+                                                        <div className="overflow-x-auto my-3">
+                                                            <table className="border-collapse w-full text-sm">
+                                                                {children}
+                                                            </table>
+                                                        </div>
+                                                    ),
+                                                    th: ({ children }) => (
+                                                        <th className="border border-gray-300 p-2 bg-gray-100 text-left">
+                                                            {children}
+                                                        </th>
+                                                    ),
+                                                    td: ({ children }) => (
+                                                        <td className="border border-gray-300 p-2">
+                                                            {children}
+                                                        </td>
+                                                    )
+                                                }}
+                                            >
+                                                {msg.content}
+                                            </ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
                                             {msg.content}
-                                        </ReactMarkdown>
-                                    </div>
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -266,7 +289,10 @@ const StudyChat = () => {
                     </p>
                 )}
 
+                {/* Auto-scroll target */}
+                <div ref={chatEndRef} />
             </div>
+
             {/* Message input */}
             <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-4">
                 <form
@@ -274,7 +300,6 @@ const StudyChat = () => {
                     className="max-w-5xl mx-auto"
                 >
                     <div className="flex items-end gap-3 bg-gray-50 border border-gray-200 rounded-2xl p-3">
-
                         <textarea
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
@@ -285,12 +310,11 @@ const StudyChat = () => {
 
                         <button
                             type="submit"
-                            disabled={!question.trim()}
+                            disabled={!question.trim() || loading}
                             className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-medium hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
                         >
                             Send
                         </button>
-
                     </div>
 
                     <p className="text-xs text-gray-400 text-center mt-2">
@@ -298,9 +322,7 @@ const StudyChat = () => {
                     </p>
                 </form>
             </div>
-
         </div>
     );
 };
-
 export default StudyChat;
